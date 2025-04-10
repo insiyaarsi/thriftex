@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Sell - ThriftEx</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+
+    <style>
+      .plain-card_number {
+        background-color: #f7f7f7;
+        border-radius: 50%;
+        width: 60px;
+        text-align: center;
+        /* font-size: 1.5rem; */
+        font-size: 1.5rem;
+        font-weight: 700;
+        height: 60px;
+        line-height: 60px;
+        min-width: 60px;
+      }
+
+      .card {
+        background-color: #f7f7f7;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding shadow */
+        transition: box-shadow 0.3s ease-in-out;
+        min-height: 300px;
+        justify-content: center;
+      }
+
+      .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+      }
+
+      .card img {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .card-title {
+        font-size: 25px;
+      }
+      .card-img-createListing {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        width: 65%;
+        border-radius: 8px;
+      }
+
+      .card-text {
+        font-size: 17px;
+        color: #333;
+        font-weight: 300;
+      }
+
+      .card-content-createListing {
+        text-align: left;
+      }
+
+      .card-createListing-step {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .carousel-button {
+        background-color: black;
+        border-radius: 20%;
+        width: 50px;
+        min-width: 40px;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 8%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="container mt-5">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <a class="navbar-brand" href="userHome.html">
+            <strong><span>Thrift</span>Ex</strong>
+          </a>
+
+          <div class="d-lg-none">
+            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+            <a href="wishlist.html" class="bi-heart custom-icon me-3"></a>
+            <a href="cart.html" class="bi-bag custom-icon"></a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto" style="padding-left: 5%; gap: 18px">
+              <li class="nav-item">
+                <a class="nav-link" href="userHome.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="products.html">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="sell.html">Sell</a>
+              </li>
+              <li class="nav-item"></li>
+              <li class="nav-item">
+                <a class="nav-link" href="orders.html">My orders</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faq.html">FAQs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+            </ul>
+
+            <!-- <form class="d-flex ms-lg-4" style="margin-right: 3%">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search for anything"
+                aria-label="Search"
+              />
+              <button class="btn search-button" type="submit">Search</button>
+            </form> -->
+
+            <div class="d-none d-lg-block" style="margin-right: -4%">
+              <ul class="navbar-nav mx-auto">
+                <li>
+                  <a
+                    class="nav-link"
+                    href="user-dashboard.html"
+                    style="padding-right: 13px"
+                    >MyThriftEx</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="wishlist.html"
+                    class="bi-heart custom-icon me-3"
+                    style="padding-left: 7%"
+                  ></a>
+                </li>
+                <li><a href="cart.html" class="bi-bag custom-icon"></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Banner Section -->
+      <div class="row align-items-center mb-5">
+        <div class="col-lg-6">
+          <h1 class="mb-3">
+            Make money selling on Thrift<span style="color: #ff4400">Ex</span>!
+          </h1>
+          <p class="lead" style="font-weight: 300">
+            Sell your items fast—millions of buyers are waiting.
+          </p>
+          <br />
+          <a href="/index.html" class="userHome-button">List an Item</a>
+        </div>
+        <div class="col-lg-6">
+          <img
+            src="images/pexels-liza-summer-6347920.jpg"
+            class="img-fluid"
+            alt="Sell Banner"
+          />
+        </div>
+      </div>
+
+      <!-- How It Works Section -->
+      <section class="my-5">
+        <h2>Learn the basics</h2>
+        <p class="mb-5" style="font-size: 15px">
+          Here's what you need to know to start selling.
+        </p>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="plain-card_number">1</div>
+            <br />
+            <h5>List Your Fashion Finds</h5>
+            <p style="font-size: 17px">
+              Easily list your pre-loved clothing with photos, descriptions, and
+              pricing. Reach eco-conscious buyers looking for stylish,
+              sustainable fashion.
+            </p>
+          </div>
+          <div class="col-lg-4">
+            <div class="plain-card_number">2</div>
+            <br />
+            <h5>Negotiate & Sell with Confidence</h5>
+            <p style="font-size: 17px">
+              Buyers can make offers on your listings, and you have the
+              flexibility to accept, decline, or counter. Our platform ensures
+              secure transactions and fair negotiations.
+            </p>
+          </div>
+          <div class="col-lg-4">
+            <div class="plain-card_number">3</div>
+            <br />
+            <h5>Get Paid, Hassle-Free</h5>
+            <p style="font-size: 17px">
+              Once your item sells, receive payments directly to your account.
+              Ship your item, and we’ll handle the rest—making selling simple
+              and rewarding!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!--Create Listing steps section-->
+      <section class="my-5">
+        <h2 class="mb-4">Steps to Create Listing</h2>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-img-createListing" aria-hidden="true">
+                <img src="images/step1-listing.png" alt="Step 1" />
+              </div>
+              <div class="card-content-createListing">
+                <span class="card-createListing-step">STEP 1</span>
+                <h5>Add Item Details</h5>
+                <p class="card-text">
+                  Provide key details like
+                  <strong>brand, size, condition, and price</strong>. A clear
+                  title and description help buyers find your listing easily.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-img-createListing" aria-hidden="true">
+                <img src="images/step2-listing.png" alt="Step 2" />
+              </div>
+
+              <div class="card-content-createListing">
+                <span class="card-createListing-step">STEP 2</span>
+                <h5>Upload Photos</h5>
+                <p class="card-text">
+                  Capture and upload <strong>high-quality images</strong> to
+                  showcase your item. Good lighting and multiple angles can help
+                  attract buyers.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-img-createListing" aria-hidden="true">
+                <img src="images/step3-listing.png" alt="Step 3" />
+              </div>
+              <div class="card-content-createListing">
+                <span class="card-createListing-step">STEP 3</span>
+                <h5>List & Sell</h5>
+                <p class="card-text">
+                  Once you're happy with the details,
+                  <strong>publish your listing</strong> and start receiving
+                  offers from buyers looking for sustainable fashion!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tips Section -->
+      <section class="tips-section py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h2>Create a Great Listing</h2>
+              <p class="text-muted mb-5" style="font-size: 15px">
+                Here are six ways to set yourself up for success.
+              </p>
+            </div>
+          </div>
+          <div id="tipsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div
+                      class="card p-3 text-dark"
+                      style="background-color: #ffead3"
+                    >
+                      <div>
+                        <h4 class="card-title">Write a Clear & Catchy Title</h4>
+                      </div>
+                      <div class="card-text">
+                        <ul>
+                          <li>
+                            Use specific details like brand, size, and condition
+                            to make your listing easy to find
+                          </li>
+                          <li>
+                            Avoid all caps and keep it concise yet informative.
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      class="card p-3 text-dark"
+                      style="background-color: #fff8d5"
+                    >
+                      <div>
+                        <h4 class="card-title">Upload High-Quality Photos</h4>
+                      </div>
+                      <div class="card-text">
+                        <ul>
+                          <li>
+                            Take well-lit photos from multiple angles to
+                            showcase your item clearly.
+                          </li>
+                          <li>
+                            Highlight any unique details or imperfections for
+                            transparency.
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card p-3" style="background-color: #d4e5fe">
+                      <div>
+                        <h4 class="card-title">Write a Detailed Description</h4>
+                      </div>
+                      <div class="card-text">
+                        <ul>
+                          <li>
+                            Provide essential information like fabric, fit, and
+                            any wear-and-tear details.
+                          </li>
+                          <li>
+                            A well-written description builds trust with buyers.
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="card p-3" style="background-color: #fcdcec">
+                      <div>
+                        <h4 class="card-title">
+                          Set a Fair Price & Be Open to Offers
+                        </h4>
+                      </div>
+                      <div class="card-text">
+                        <ul>
+                          <li>
+                            Research similar listings to price competitively,
+                            but stay open to negotiations.
+                          </li>
+                          <li>
+                            Buyers can send offers, and you have the flexibility
+                            to accept, decline, or counter to get the best deal.
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card p-3" style="background-color: #f0fce1">
+                      <div>
+                        <h4 class="card-title">Make Your Listing Stand Out</h4>
+                      </div>
+                      <div class="card-text">
+                        <ul>
+                          <li>
+                            Use accurate keywords and detailed descriptions to
+                            make your listing more searchable and appealing.
+                          </li>
+                          <li>
+                            The more information you provide, the faster it
+                            sells!
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="card p-3" style="background-color: #fff8d5">
+                      <div>
+                        <h4 class="card-title">Ship Smoothly & Responsibly</h4>
+                      </div>
+                      <div class="card-text">
+                        <ul>
+                          <li>
+                            Once a deal is finalized, pack your item securely
+                            and our delivery partner will come pick it up.
+                          </li>
+                          <li>
+                            Quick and reliable shipping improves buyer
+                            satisfaction and increases your chances of repeat
+                            sales.
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              class="carousel-control-prev carousel-button"
+              type="button"
+              data-bs-target="#tipsCarousel"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next carousel-button"
+              type="button"
+              data-bs-target="#tipsCarousel"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row" style="margin-left: 35px; margin-right: -106px">
+          <div class="col-lg col-10 me-auto mb-4">
+            <h4 class="text-white"><a href="#">Thrift</a>Ex</h4>
+            <p class="copyright-text text-muted mb-4 mb-lg-0">
+              Copyright © 2025 <strong>ThriftEx</strong>
+            </p>
+            <br />
+            <p class="copyright-text">
+              <a href="#" target="_blank"></a>
+            </p>
+          </div>
+
+          <div class="col-lg col-5">
+            <h5 class="text-white mb-3">Quick Links</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="userHome.html" class="footer-menu-link">Home</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="products.html" class="footer-menu-link"
+                  >All Products</a
+                >
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="sell.html" class="footer-menu-link">Sell Products</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="user-dashboard.html" class="footer-menu-link"
+                  >My ThriftEx</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-8">
+            <h5 class="text-white mb-3">Sitemap</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="about.html" class="footer-menu-link">About</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Privacy policy</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">FAQs</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-4">
+            <h5 class="text-white mb-3">Social</h5>
+
+            <ul
+              class="social-icon"
+              style="display: flex; flex-direction: column"
+            >
+              <li>
+                <a href="#" class="social-icon-link bi-youtube"> Youtube</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-whatsapp"> Whatsapp</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-instagram"> Instagram</a>
+              </li>
+
+              <li><a href="#" class="social-icon-link bi-twitter"> X</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p
+        style="
+          font-family: 'Euphoria Script';
+          font-size: 35px;
+          font-weight: 300;
+          color: white;
+          padding-top: 5%;
+          text-align: center;
+          text-decoration: underline;
+          margin-top: 45px;
+        "
+      >
+        Keep Styling, Keep Thrifting
+      </p>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/Headroom.js"></script>
+    <script src="js/jQuery.headroom.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>

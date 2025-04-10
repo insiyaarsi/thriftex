@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Sign Up - ThriftEx</title>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("images/allison-christine-wV7UfVeI84w-unsplash.jpg");
+        background-size: cover;
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Prevent repeating */
+        position: relative; /* Needed for the overlay */
+      }
+
+      /* Add a black overlay */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+        z-index: 1; /* Ensure the overlay is above the background */
+      }
+
+      .container {
+        position: relative; /* Ensure content is above the overlay */
+        z-index: 2; /* Higher than the overlay */
+        display: flex;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 800px;
+      }
+
+      .left-section {
+        background-color: #f9f9f9;
+        color: black;
+        width: 50%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .right-section {
+        width: 50%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .right-section h2 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .input-field {
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 16px;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .sign-in-button {
+        background-color: black;
+        color: #fff;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .sign-in-button:hover {
+        background-color: #ff4400;
+        color: white;
+      }
+
+      .google-button {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 12px;
+        font-size: 16px;
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .google-button img {
+        width: 20px;
+      }
+
+      .left-section h2 {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+
+      .left-section h1 {
+        font-size: 50px;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .success-message {
+        color: green;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .dropdown {
+        margin-bottom: 15px;
+        padding: 10px;
+        width: 100%;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Left Section -->
+      <div class="left-section">
+        <h2>Welcome to</h2>
+        <h1>Thrift<span style="color: #ff4400">Ex</span></h1>
+      </div>
+
+      <!-- Right Section -->
+      <div class="right-section">
+        <h2>User Sign Up</h2>
+        <form id="signup-form">
+          <input
+            type="text"
+            id="username"
+            class="input-field"
+            placeholder="Username"
+            required
+          />
+          <p id="username-error" class="error-message"></p>
+
+          <input
+            type="text"
+            id="email"
+            class="input-field"
+            placeholder="Email"
+            required
+          />
+          <p id="email-error" class="error-message"></p>
+
+          <input
+            type="password"
+            id="password"
+            class="input-field"
+            placeholder="Password"
+            required
+          />
+          <p id="password-error" class="error-message"></p>
+
+          <button type="submit" class="sign-in-button">Sign Up</button>
+          <p>
+            Already have an account? <a href="index.html"><b>Sign In</b></a>
+          </p>
+          <p id="signup-status" class="error-message"></p>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Check username availability in real-time
+      let usernameTimeout;
+      async function checkUsernameAvailability(username) {
+        clearTimeout(usernameTimeout);
+        document.getElementById("username-error").innerText = "";
+
+        if (username.trim() === "") {
+          return;
+        }
+
+        usernameTimeout = setTimeout(async () => {
+          try {
+            const response = await fetch("/check-username", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username }),
+            });
+
+            const data = await response.json();
+            if (data.exists) {
+              document.getElementById("username-error").innerText =
+                "Username already taken.";
+            }
+          } catch (error) {
+            console.error("Error checking username:", error);
+          }
+        }, 500);
+      }
+
+      // Validate email format in real-time
+      function validateEmail(email) {
+        const emailError = document.getElementById("email-error");
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+        emailError.innerText = emailRegex.test(email)
+          ? ""
+          : "Enter a valid email.";
+      }
+
+      // Validate password in real-time
+      function validatePassword(password) {
+        const passwordError = document.getElementById("password-error");
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+        passwordError.innerText = passwordRegex.test(password)
+          ? ""
+          : "Password must be 8+ characters and contain 1 letter & 1 number.";
+      }
+
+      // Add event listeners
+      document
+        .getElementById("username")
+        .addEventListener("input", function () {
+          checkUsernameAvailability(this.value);
+        });
+
+      document.getElementById("email").addEventListener("input", function () {
+        validateEmail(this.value);
+      });
+
+      document
+        .getElementById("password")
+        .addEventListener("input", function () {
+          validatePassword(this.value);
+        });
+
+      // Handle form submission
+      document
+        .getElementById("signup-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const username = document.getElementById("username").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value.trim();
+          const signupStatus = document.getElementById("signup-status");
+
+          // Check if any errors exist
+          if (document.querySelector(".error-message:not(:empty)")) {
+            return;
+          }
+
+          try {
+            const response = await fetch("/api/users/signup", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, email, password }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+              signupStatus.classList.remove("error-message");
+              signupStatus.classList.add("success-message");
+              signupStatus.innerText = "Signup successful! Redirecting...";
+
+              setTimeout(() => (window.location.href = "/index.html"), 2000);
+            } else {
+              signupStatus.classList.remove("success-message");
+              signupStatus.classList.add("error-message");
+              signupStatus.innerText = data.message || "Signup failed.";
+            }
+          } catch (error) {
+            signupStatus.classList.remove("success-message");
+            signupStatus.classList.add("error-message");
+            signupStatus.innerText = "An error occurred. Try again.";
+          }
+        });
+    </script>
+  </body>
+</html>

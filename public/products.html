@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Shop Products - ThriftEx</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+    <!--
+
+Tooplate 2127 Little Fashion
+
+https://www.tooplate.com/view/2127-little-fashion
+
+-->
+  </head>
+
+  <body>
+    <section class="preloader">
+      <div class="spinner">
+        <span class="sk-inner-circle"></span>
+      </div>
+    </section>
+
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <a class="navbar-brand" href="userHome.html">
+            <strong><span>Thrift</span>Ex</strong>
+          </a>
+
+          <div class="d-lg-none">
+            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+            <a href="wishlist.html" class="bi-heart custom-icon me-3"></a>
+            <a href="cart.html" class="bi-bag custom-icon"></a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto" style="padding-left: 5%; gap: 18px">
+              <li class="nav-item">
+                <a class="nav-link" href="userHome.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="products.html">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="sell.html">Sell</a>
+              </li>
+              <li class="nav-item"></li>
+              <li class="nav-item">
+                <a class="nav-link" href="orders.html">My orders</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faq.html">FAQs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+            </ul>
+
+            <div class="d-none d-lg-block" style="margin-right: -4%">
+              <ul class="navbar-nav mx-auto">
+                <li>
+                  <a
+                    class="nav-link"
+                    href="user-dashboard.html"
+                    style="padding-right: 13px"
+                    >MyThriftEx</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="wishlist.html"
+                    class="bi-heart custom-icon me-3"
+                    style="padding-left: 7%"
+                  ></a>
+                </li>
+                <li><a href="cart.html" class="bi-bag custom-icon"></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="slick-custom">
+        <img
+          src="images/angela-bailey-jlo7Bf4tUoY-unsplash.jpg"
+          alt=""
+          style="height: 510px"
+        />
+
+        <div class="slick-bottom" style="background: transparent">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 col-10">
+                <h1
+                  class="slick-title"
+                  style="
+                    font-family: 'Euphoria Script';
+                    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); */
+                    color: white;
+                    font-size: 65px;
+                    font-weight: 900;
+                  "
+                >
+                  <span style="color: #ff4400">Find </span>your Perfect Thrift!
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--SORT BY -->
+      <div class="sort-filter">
+        <div class="sort-wrapper">
+          <div class="sort-label">
+            <label for="sortBy" class="form-label">Sort By:</label>
+          </div>
+          <select id="sortBy" class="form-select">
+            <option value="createdAt">Newest</option>
+            <option value="priceAsc">Price: Low to High</option>
+            <option value="priceDesc">Price: High to Low</option>
+          </select>
+        </div>
+
+        <div class="filter-container">
+          <!-- Filter Button -->
+          <button id="filter-button" class="filter-btn">Filter</button>
+
+          <!-- Filter Side Window -->
+          <div id="filterWindow" class="filter-window">
+            <div
+              class="filter-window-content col-lg-12 col-sm-12 col-md-6 mb-3"
+            >
+              <button id="closeFilterWindow" class="close-btn">
+                <i class="bi bi-x-circle"></i> Close
+              </button>
+              <h4>Filter by</h4>
+
+              <!-- Category Filter -->
+              <div class="filter-section">
+                <h5>Category</h5>
+                <label>
+                  <input type="checkbox" name="category" value="clothing" />
+                  Clothing </label
+                ><br />
+                <label>
+                  <input type="checkbox" name="category" value="accessories" />
+                  Accessories
+                </label>
+              </div>
+              <br />
+
+              <!-- Condition Filter -->
+              <div class="filter-section">
+                <h5>Condition</h5>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="condition"
+                    value="New with tags"
+                  />
+                  New With Tags
+                </label>
+                <br />
+                <label>
+                  <input
+                    type="checkbox"
+                    name="condition"
+                    value="New without tags"
+                  />
+                  New without Tags
+                </label>
+                <br />
+                <label>
+                  <input type="checkbox" name="condition" value="Pre-owned" />
+                  Pre-owned
+                </label>
+              </div>
+              <br />
+
+              <div class="filter-section">
+                <h5>Gender</h5>
+                <label>
+                  <input type="checkbox" name="gender" value="Male" />
+                  Male
+                </label>
+                <br />
+                <label>
+                  <input type="checkbox" name="gender" value="Female" />
+                  Female
+                </label>
+              </div>
+              <br />
+
+              <div class="filter-section">
+                <h5>Size</h5>
+                <label>
+                  <input type="checkbox" name="size" value="XS" />
+                  XS
+                </label>
+                <br />
+                <label>
+                  <input type="checkbox" name="size" value="S" />
+                  S
+                </label>
+                <br />
+                <label>
+                  <input type="checkbox" name="size" value="M" />
+                  M
+                </label>
+                <br />
+                <label>
+                  <input type="checkbox" name="size" value="L" />
+                  L
+                </label>
+                <br />
+                <label>
+                  <input type="checkbox" name="size" value="XL" />
+                  XL
+                </label>
+                <br />
+              </div>
+
+              <!-- Apply Filters Button -->
+              <button id="apply-filters" class="apply-btn">
+                Apply Filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="products product-section">
+        <div class="container">
+          <div class="row" id="product-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row" style="margin-left: 35px; margin-right: -106px">
+          <div class="col-lg col-10 me-auto mb-4">
+            <h4 class="text-white"><a href="#">Thrift</a>Ex</h4>
+            <p class="copyright-text text-muted mb-4 mb-lg-0">
+              Copyright © 2025 <strong>ThriftEx</strong>
+            </p>
+            <br />
+            <p class="copyright-text">
+              <a href="#" target="_blank"></a>
+            </p>
+          </div>
+
+          <div class="col-lg col-5">
+            <h5 class="text-white mb-3">Quick Links</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="userHome.html" class="footer-menu-link">Home</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="products.html" class="footer-menu-link"
+                  >All Products</a
+                >
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="sell.html" class="footer-menu-link">Sell Products</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="user-dashboard.html" class="footer-menu-link"
+                  >My ThriftEx</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-8">
+            <h5 class="text-white mb-3">Sitemap</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="about.html" class="footer-menu-link">About</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Privacy policy</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">FAQs</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-4">
+            <h5 class="text-white mb-3">Social</h5>
+
+            <ul
+              class="social-icon"
+              style="display: flex; flex-direction: column"
+            >
+              <li>
+                <a href="#" class="social-icon-link bi-youtube"> Youtube</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-whatsapp"> Whatsapp</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-instagram"> Instagram</a>
+              </li>
+
+              <li><a href="#" class="social-icon-link bi-twitter"> X</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p
+        style="
+          font-family: 'Euphoria Script';
+          font-size: 35px;
+          font-weight: 300;
+          color: white;
+          padding-top: 5%;
+          text-align: center;
+          text-decoration: underline;
+          margin-top: 45px;
+        "
+      >
+        Keep Styling, Keep Thrifting
+      </p>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Headroom.js"></script>
+    <script src="js/jQuery.headroom.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/product-list.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetchAndRenderProducts();
+      });
+
+      function fetchAndRenderProducts({
+        sortBy = "createdAt",
+        category = "",
+        condition = "",
+        gender = "",
+        size = "",
+      } = {}) {
+        const queryParams = new URLSearchParams({
+          sortBy,
+          category,
+          condition,
+          gender,
+          size,
+        }).toString();
+
+        fetch("http://localhost:3000/api/products?${queryParams}", {
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              const productList = document.getElementById("product-list");
+              productList.innerHTML = "";
+
+              data.data.forEach((product) => {
+                const productHTML = `
+                  <div class="col-lg-3 col-12 mb-3">
+                    <div class="product-thumb" data-id="${product.id}">
+                      <a href="product-detail.html?id=${product.id}">
+                        <img src="${
+                          product.image_url
+                        }" class="img-fluid product-image product-listing-image" alt="${
+                  product.title
+                }">
+                      </a>
+                      <div class="product-top d-flex">
+                        <span class="product-alert me-auto">${
+                          product.condition1
+                        }</span>
+                        <a href="#" class="bi-heart-fill product-icon add-to-wishlist" 
+                          data-id="${product.id}" 
+                          data-size="${product.size || "M"}" 
+                          data-color="${product.color || "Black"}" 
+                          data-price="${product.price}" 
+                          data-image="${product.image_url}">
+                        </a>
+                      </div>
+                      <div class="product-info d-flex">
+                        <div>
+                          <h5 class="product-title-listing mb-0">
+                            <a href="product-detail.html?id=${
+                              product.id
+                            }" class="product-title-link">${product.title}</a>
+                          </h5>
+                        </div>
+                        <small class="product-price text-muted ms-auto">₹${
+                          product.price
+                        }</small>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                productList.innerHTML += productHTML;
+              });
+
+              attachWishlistListeners();
+            } else {
+              console.error("Failed to fetch products:", data.message);
+            }
+          })
+          .catch((error) => console.error("Error fetching products:", error));
+      }
+
+      function attachWishlistListeners() {
+        document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+          button.addEventListener("click", function (event) {
+            event.preventDefault();
+            const productId = this.getAttribute("data-id");
+            const size = this.getAttribute("data-size") || "M";
+            const color = this.getAttribute("data-color") || "Black";
+            const price = this.getAttribute("data-price");
+            const image_url = this.getAttribute("data-image");
+
+            addToWishlist(productId, size, color, price, image_url);
+          });
+        });
+      }
+
+      function addToWishlist(productId, size, color, price, image_url) {
+        fetch("http://localhost:3000/api/wishlist/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            product_id: productId,
+            size,
+            color,
+            quantity: 1,
+            price,
+            image_url,
+          }),
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+          })
+          .catch((error) => console.error("Error adding to wishlist:", error));
+      }
+
+      function attachWishlistListeners() {
+        document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+          button.addEventListener("click", function (event) {
+            event.preventDefault();
+            const productId = this.getAttribute("data-id");
+            const size = this.getAttribute("data-size") || "M";
+            const color = this.getAttribute("data-color") || "Black";
+            const price = this.getAttribute("data-price");
+            const image_url = this.getAttribute("data-image");
+
+            addToWishlist(productId, size, color, price, image_url);
+          });
+        });
+      }
+
+      function addToWishlist(productId, size, color, price, image_url) {
+        fetch("http://localhost:3000/api/wishlist/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            product_id: productId,
+            size,
+            color,
+            quantity: 1,
+            price,
+            image_url,
+          }),
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(data.message);
+          })
+          .catch((error) => console.error("Error adding to wishlist:", error));
+      }
+    </script>
+    <!-- <script src="js/product-detail.js"></script> -->
+  </body>
+</html>

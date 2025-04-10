@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Sign In - ThriftEx</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container {
+        display: flex;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 500px;
+        flex-direction: column;
+        padding: 30px;
+        text-align: center;
+      }
+
+      h2 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: white;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .sign-in-button {
+        background-color: #0f4c75;
+        color: #fff;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        width: 100%;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .sign-in-button:hover {
+        background-color: #1e5d97;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: -10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Admin Sign In</h2>
+
+      <!-- Sign In Form -->
+      <form id="admin-signin-form" action="/admin-signin" method="POST">
+        <input
+          type="text"
+          id="admin-username"
+          class="input-field"
+          placeholder="Admin Username"
+          required
+        />
+        <input
+          type="password"
+          id="admin-password"
+          class="input-field"
+          placeholder="Password"
+          required
+        />
+        <div class="error-message" id="error-message"></div>
+        <button type="submit" class="sign-in-button">Sign In</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("admin-signin-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const username = document
+            .getElementById("admin-username")
+            .value.trim();
+          const password = document
+            .getElementById("admin-password")
+            .value.trim();
+          const errorMessage = document.getElementById("error-message");
+
+          errorMessage.innerText = ""; // Clear previous errors
+
+          if (!username || !password) {
+            errorMessage.innerText = "Please enter both username and password.";
+            return;
+          }
+
+          const response = await fetch("/api/admin-signin", {
+            // ✅ Updated API route
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          });
+
+          const data = await response.json();
+          if (data.success) {
+            alert("Admin Login Successful!");
+            window.location.href = "/admin-dashboard.html"; // Redirect to Admin Dashboard
+          } else {
+            errorMessage.innerText = "Invalid credentials. Please try again.";
+          }
+        });
+    </script>
+  </body>
+</html>

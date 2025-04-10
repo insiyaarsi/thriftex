@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title>User Dashboard - ThriftEx</title>
+
+    <!-- CSS & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="userHome.html">
+          <strong><span>Thrift</span>Ex</strong>
+        </a>
+
+        <div class="d-lg-none">
+          <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+          <a href="wishlist.html" class="bi-heart custom-icon me-3"></a>
+          <a href="cart.html" class="bi-bag custom-icon"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto" style="padding-left: 5%; gap: 18px">
+            <li class="nav-item">
+              <a class="nav-link" href="userHome.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="products.html">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="sell.html">Sell</a>
+            </li>
+            <li class="nav-item"></li>
+            <li class="nav-item">
+              <a class="nav-link" href="orders.html">My orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="faq.html">FAQs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+          </ul>
+
+          <div class="d-none d-lg-block" style="margin-right: -4%">
+            <ul class="navbar-nav mx-auto">
+              <li>
+                <a
+                  class="nav-link active"
+                  href="user-dashboard.html"
+                  style="padding-right: 13px"
+                  >MyThriftEx</a
+                >
+              </li>
+              <li>
+                <a
+                  href="wishlist.html"
+                  class="bi-heart custom-icon me-3 icon"
+                  style="padding-left: 7%"
+                ></a>
+              </li>
+              <li><a href="cart.html" class="bi-bag custom-icon icon"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main">
+      <div style="height: 75px" class="block-spacer"></div>
+      <div class="container" style="margin-left: -15px !important">
+        <!-- <div class="row"> -->
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 col-12 mb-4 sidebar">
+          <h3 id="user-dashboard-title">User Dashboard</h3>
+          <a href="user-dashboard.html"
+            ><i class="bi bi-house-door-fill"></i> Dashboard</a
+          >
+          <a href="my-orders.html"
+            ><i class="bi bi-bag-check-fill"></i> My Orders</a
+          >
+          <a href="wishlist.html"><i class="bi bi-heart-fill"></i> Wishlist</a>
+          <a href="user-offer.html"><i class="bi bi-gift-fill"></i> Offers</a>
+          <a href="cart.html"><i class="bi bi-cart-fill"></i> Cart</a>
+          <a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a>
+          <a href="#" id="logout-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+
+        <div id="session-expired-message" style="display: none; color: red; font-weight: bold; padding: 10px; background-color: #ffe6e6; text-align: center;">
+          Your session has expired. Redirecting to login...
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-11 col-md-10 col-12 mb-4 main-content">
+          <h2 id="welcome-message">
+            Hello, <span id="username-display">User</span>
+          </h2>
+          <p>Welcome to your dashboard. Track your orders and spending here.</p>
+
+          <!-- Error Message (Displayed Here Instead of Alerts) -->
+          <p id="error-message" class="error-message"></p>
+
+          <!-- Statistics Cards -->
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card p-3">
+                <h5>Total Purchases</h5>
+                <p id="total-purchases">₹0.00</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card p-3">
+                <h5>Total Orders</h5>
+                <p id="total-orders">0</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card p-3">
+                <h5>Pending Orders</h5>
+                <p id="pending-orders">0</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card p-3">
+                <h5>Avg. Order Value</h5>
+                <p id="avg-order-value">₹0.00</p>
+              </div>
+              <!-- </div> -->
+            </div>
+
+            <!-- Monthly Spending -->
+            <h4 class="mt-4">Monthly Spending</h4>
+            <canvas id="spendingChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const errorMessageEl = document.getElementById("error-message");
+
+        try {
+          // Fetch username separately
+          const usernameResponse = await fetch(
+            "http://localhost:3000/user/get-username",
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          );
+          const usernameData = await usernameResponse.json();
+
+          if (usernameData.success && usernameData.username) {
+            document.getElementById("username-display").textContent =
+              usernameData.username;
+            document.getElementById(
+              "user-dashboard-title"
+            ).textContent = `${usernameData.username}'s Dashboard`;
+          } else {
+            errorMessageEl.textContent = "Failed to fetch username.";
+            console.error("Failed to fetch username:", usernameData.message);
+          }
+
+          // Fetch user dashboard data
+          const response = await fetch(
+            "http://localhost:3000/api/orders/user-dashboard",
+            {
+              method: "GET",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const data = await response.json();
+          console.log("API Response:", data); // ✅ Debugging: Ensure data is returned
+
+          if (!data.success) {
+            errorMessageEl.textContent = "Error loading dashboard data.";
+            console.error("Failed to fetch dashboard data:", data.message);
+            return;
+          }
+
+          // ✅ Update statistics
+          document.getElementById(
+            "total-purchases"
+          ).textContent = `₹${parseFloat(data.totalSpent).toFixed(2)}`;
+          document.getElementById("total-orders").textContent =
+            data.totalOrders;
+          document.getElementById("pending-orders").textContent =
+            data.pendingOrders;
+          document.getElementById(
+            "avg-order-value"
+          ).textContent = `₹${parseFloat(data.avgOrderValue).toFixed(2)}`;
+
+          // ✅ Monthly Spending Chart
+          new Chart(document.getElementById("spendingChart"), {
+            type: "bar",
+            data: {
+              labels: data.months,
+              datasets: [
+                {
+                  label: "Spending (₹)",
+                  data: data.monthlySpending,
+                  // backgroundColor: "rgba(54, 162, 235, 0.5)",
+                  backgroundColor: "rgba(255, 68, 0, 0.5)",
+                  borderColor: "rgba(255, 68, 0, 1)",
+                  borderWidth: 1,
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        } catch (error) {
+          errorMessageEl.textContent = "An unexpected error occurred.";
+          console.error("Error fetching dashboard data:", error);
+        }
+      });
+
+      function showSessionMessageAndRedirect() {
+        const msg = document.getElementById("session-expired-message");
+        msg.style.display = "block";
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000); // 2-second delay before redirect
+      }
+
+      // Session check
+      async function checkSession() {
+        try {
+          const res = await fetch("/user/get-username", {
+            method: "GET",
+            credentials: "include"
+          });
+
+          const data = await res.json();
+
+          if (!data.success || !data.username) {
+            showSessionMessageAndRedirect();
+          }
+        } catch (err) {
+          showSessionMessageAndRedirect();
+        }
+      }
+
+      // Handle back button (from cache)
+      window.addEventListener("pageshow", function (event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+          checkSession();
+        }
+      });
+
+      // Initial session check
+      document.addEventListener("DOMContentLoaded", async function () {
+        await checkSession();
+        document.body.style.display = "block"; // Show page only if session is valid
+      });
+
+      // Logout logic
+      document.getElementById("logout-link").addEventListener("click", async function (e) {
+        e.preventDefault();
+        try {
+          const res = await fetch("/api/logout", {
+            method: "POST",
+            credentials: "include"
+          });
+
+          const data = await res.json();
+          if (data.success) {
+            window.location.href = "index.html";
+          } else {
+            alert("Logout failed. Try again.");
+          }
+        } catch (error) {
+          console.error("Logout error:", error);
+          alert("An error occurred during logout.");
+        }
+      });
+
+      // Prevent navigating back after logout
+      if (window.history && window.history.pushState) {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+          window.history.go(1);
+        };
+      }
+
+    </script>
+  </body>
+</html>

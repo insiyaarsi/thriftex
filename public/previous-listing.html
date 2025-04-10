@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Previous Listings</title>
+    <!-- CSS & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        overflow-x: hidden;
+      }
+      .text-center {
+        text-align: center;
+        font-size: 45px;
+      }
+      .actions button {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="container" style="margin-left: -15px !important">
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 col-12 mb-4 sidebar">
+          <h3 id="user-dashboard-title">Seller Dashboard</h3>
+          <a href="seller-dashboard.html"
+            ><i class="bi bi-house-door-fill"></i> Dashboard</a
+          >
+          <a href="create-listing.html"
+            ><i class="bi bi-bag-check-fill"></i> Create Listing</a
+          >
+          <a href="previous-listing.html"
+            ><i class="bi bi-list-ul"></i> Previous Listings</a
+          >
+
+          <a href="seller-offer.html"><i class="bi bi-tag-fill"></i> Offers</a>
+          <a href="unsold-listing.html"
+            ><i class="bi bi-x-circle-fill"></i> Unsold</a
+          >
+          <a href="seller-orders.html"
+            ><i class="bi bi-list-check"></i> Orders</a
+          >
+          <a href="index.html"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+
+        <!--Main Content-->
+        <div class="col-lg-11 col-md-10 col-12 mb-4 main-content">
+          <div style="height: 35px" class="block-spacer"></div>
+          <h2 class="text-center">Previous Listings</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Condition</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="listings-table-body">
+              <!-- Listings will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const listingsTable = document.getElementById("listings-table-body");
+
+        try {
+          // Fetch listings from the backend
+          const response = await fetch(
+            "http://localhost:3000/api/listings/seller",
+            {
+              method: "GET",
+              credentials: "include", // Include cookies for session
+            }
+          );
+
+          const result = await response.json();
+
+          if (response.ok) {
+            const listings = result.listings;
+
+            // If no listings are found
+            if (listings.length === 0) {
+              listingsTable.innerHTML = `<tr><td colspan="6" class="text-center">No listings found.</td></tr>`;
+            } else {
+              // Populate the table with listings
+              listings.forEach((listing) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td><img src="${listing.image_url}" alt="${
+                  listing.title
+                }" style="width: 50px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
+                <td>${listing.title}</td>
+                <td>${listing.category}</td>
+                <td>₹${parseFloat(listing.price).toFixed(2)}</td>
+                <td>${listing.condition1}</td>
+                <td class="status">${listing.status}</td>
+                <td class="actions">
+                  ${
+                    listing.status === "Sold"
+                      ? `<button class="btn btn-success btn-sm" onclick="restockAsNew(${listing.id})">Restock</button>`
+                      : ""
+                  }
+                  <button class="btn btn-danger btn-sm" onclick="deleteListing(${
+                    listing.id
+                  })">Delete</button>
+                </td>
+              `;
+                listingsTable.appendChild(row);
+              });
+            }
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          console.error("Error fetching listings:", error);
+          alert("An error occurred while fetching the listings.");
+        }
+      });
+
+      // Function to update the status of a listing (Restock)
+      async function updateStatus(listingId, newStatus) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/listings/status/${listingId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include", // Include cookies for session
+              body: JSON.stringify({ status: newStatus }),
+            }
+          );
+
+          const result = await response.json();
+
+          if (response.ok) {
+            alert(`Listing status updated to "${newStatus}" successfully!`);
+            location.reload(); // Reload the page to reflect changes
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          console.error("Error updating listing status:", error);
+          alert("An error occurred while updating the listing status.");
+        }
+      }
+
+      // Function to delete a listing
+      async function deleteListing(listingId) {
+        if (
+          !confirm(
+            "Are you sure you want to delete this listing? This action cannot be undone."
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/listings/${listingId}`,
+            {
+              method: "DELETE",
+              credentials: "include",
+            }
+          );
+
+          const result = await response.json();
+
+          if (response.ok) {
+            alert("Listing deleted successfully.");
+            location.reload(); // Reload the page to reflect changes
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          console.error("Error deleting listing:", error);
+          alert("An error occurred while deleting the listing.");
+        }
+      }
+
+      async function restockAsNew(listingId) {
+        if (!confirm("Restocking will create a new listing. Proceed?")) return;
+      
+        try {
+          const response = await fetch(`http://localhost:3000/api/listings/restock/${listingId}`, {
+            method: "POST",
+            credentials: "include"
+          });
+      
+          const result = await response.json();
+      
+          if (response.ok) {
+            alert(result.message);
+            location.reload();
+          } else {
+            alert(`Error: ${result.message}`);
+          }
+        } catch (error) {
+          console.error("Error restocking listing:", error);
+          alert("An error occurred while restocking the listing.");
+        }
+      }
+      
+    </script>
+  </body>
+</html>

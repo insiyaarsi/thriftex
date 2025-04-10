@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Sign In - ThriftEx</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .left-section {
+            background-color: #0f4c75;
+            color: #fff;
+            width: 50%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .right-section {
+            width: 50%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-section h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-field {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .sign-in-button {
+            background-color: #0f4c75;
+            color: #fff;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .sign-in-button:hover {
+            background-color: #1e5d97;
+        }
+
+        .google-button {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 12px;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .google-button img {
+            width: 20px;
+        }
+
+        .left-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .left-section p {
+            font-size: 18px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Left Section -->
+    <div class="left-section">
+        <h2>Welcome to</h2>
+        <p>ThriftEx</p>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-section">
+        <h2>Sign In</h2>
+        <form id="signin-form">
+            <input type="text" id="username" class="input-field" placeholder="Username" required>
+            <p id="username-error" class="error-message"></p>
+
+            <input type="password" id="password" class="input-field" placeholder="Password" required>
+            <p id="password-error" class="error-message"></p>
+
+            <button type="submit" id="signin-button" class="sign-in-button">Sign In</button>
+            <p>Don't have an account? <a href="S-signup.html"><b>Sign Up</b></a></p>
+            <p id="signin-status" class="error-message"></p>
+        </form>
+
+        <p>Or sign in with:</p>
+        <a href="/auth/google/seller">
+            <button type="button" class="google-button">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
+                Sign in with Google
+            </button>
+        </a>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const signinForm = document.getElementById("signin-form");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const signinButton = document.getElementById("signin-button");
+        const signinStatus = document.getElementById("signin-status");
+
+        // Real-time input validation
+        function validateInput(inputField, errorField, message) {
+            if (inputField.value.trim() === "") {
+                errorField.innerText = message;
+            } else {
+                errorField.innerText = "";
+            }
+        }
+
+        usernameInput.addEventListener("input", function () {
+            validateInput(usernameInput, document.getElementById("username-error"), "Username is required.");
+        });
+
+        passwordInput.addEventListener("input", function () {
+            validateInput(passwordInput, document.getElementById("password-error"), "Password is required.");
+        });
+
+        signinForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            // Check for empty fields
+            if (!username || !password) {
+                validateInput(usernameInput, document.getElementById("username-error"), "Username is required.");
+                validateInput(passwordInput, document.getElementById("password-error"), "Password is required.");
+                return;
+            }
+
+            // Disable button and show "Signing in..."
+            signinButton.disabled = true;
+            signinButton.innerText = "Signing in...";
+
+            try {
+                const response = await fetch("/api/sellers/signin", {  // ✅ Ensure this is the correct seller sign-in API
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    signinStatus.classList.remove("error-message");
+                    signinStatus.classList.add("success-message");
+                    signinStatus.innerText = "Sign-in successful! Redirecting...";
+
+                    setTimeout(() => window.location.href = "seller-dashboard.html", 2000);
+                } else {
+                    signinStatus.classList.remove("success-message");
+                    signinStatus.classList.add("error-message");
+                    signinStatus.innerText = data.message || "Invalid credentials.";
+                    signinButton.disabled = false;
+                    signinButton.innerText = "Sign In";
+                }
+            } catch (error) {
+                signinStatus.classList.remove("success-message");
+                signinStatus.classList.add("error-message");
+                signinStatus.innerText = "An error occurred. Try again.";
+                signinButton.disabled = false;
+                signinButton.innerText = "Sign In";
+            }
+        });
+
+        // Handle Google sign-in button click
+        document.querySelector(".google-button").addEventListener("click", function () {
+            window.open("/auth/google/seller", "_self");  // ✅ Ensure correct Google Sign-In route
+        });
+    });
+</script>
+
+</body>
+</html>

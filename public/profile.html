@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Settings - ThriftEx</title>
+    <!-- CSS & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .btn-save {
+        background-color: black;
+        color: white;
+        width: 100%;
+        height: 50px;
+        border-radius: 5px;
+      }
+      .btn-save:hover {
+        background-color: #ff4400;
+        color: white;
+      }
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+      .success-message {
+        color: green;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+      .error-message {
+        color: red;
+        font-size: 14px;
+        display: block;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="userHome.html">
+          <strong><span>Thrift</span>Ex</strong>
+        </a>
+
+        <div class="d-lg-none">
+          <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+          <a href="wishlist.html" class="bi-heart custom-icon me-3"></a>
+          <a href="cart.html" class="bi-bag custom-icon"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto" style="padding-left: 5%; gap: 18px">
+            <li class="nav-item">
+              <a class="nav-link" href="userHome.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="products.html">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="sell.html">Sell</a>
+            </li>
+            <li class="nav-item"></li>
+            <li class="nav-item">
+              <a class="nav-link" href="orders.html">My orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="faq.html">FAQs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+          </ul>
+
+          <div class="d-none d-lg-block" style="margin-right: -4%">
+            <ul class="navbar-nav mx-auto">
+              <li>
+                <a
+                  class="nav-link active"
+                  href="user-dashboard.html"
+                  style="padding-right: 13px"
+                  >MyThriftEx</a
+                >
+              </li>
+              <li>
+                <a
+                  href="wishlist.html"
+                  class="bi-heart custom-icon me-3 icon"
+                  style="padding-left: 7%"
+                ></a>
+              </li>
+              <li><a href="cart.html" class="bi-bag custom-icon icon"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main">
+      <div style="height: 75px" class="block-spacer"></div>
+      <div class="container" style="margin-left: -15px !important">
+        <!-- <div class="row"> -->
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 col-12 mb-4 sidebar">
+          <h3 id="user-dashboard-title">User Dashboard</h3>
+          <a href="user-dashboard.html"
+            ><i class="bi bi-house-door-fill"></i> Dashboard</a
+          >
+          <a href="my-orders.html"
+            ><i class="bi bi-bag-check-fill"></i> My Orders</a
+          >
+          <a href="wishlist.html"><i class="bi bi-heart-fill"></i> Wishlist</a>
+          <a href="user-offer.html"><i class="bi bi-gift-fill"></i> Offers</a>
+          <a href="cart.html"><i class="bi bi-cart-fill"></i> Cart</a>
+          <a href="profile.html"><i class="bi bi-person-circle"></i> Profile</a>
+          <a href="index.html"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div
+          class="col-lg-11 col-md-10 col-12 mb-4 container settings-container"
+        >
+          <h2 class="settings-title">Account Details</h2>
+          <p id="status-message" class="error-message"></p>
+          <form id="settings-form">
+            <!-- General Account Details -->
+            <div class="form-group">
+              <label for="first_name">First Name</label>
+              <input type="text" id="first_name" class="form-control" />
+              <span class="error-message" id="first_name_error"></span>
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name</label>
+              <input type="text" id="last_name" class="form-control" />
+              <span class="error-message" id="last_name_error"></span>
+            </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" class="form-control" required />
+              <span class="error-message" id="username_error"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control" required />
+              <span class="error-message" id="email_error"></span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Contact Number</label>
+              <input type="number" id="phone" class="form-control" />
+              <span class="error-message" id="phone_error"></span>
+            </div>
+            <div class="form-group">
+              <label for="address">Address</label>
+              <textarea id="address" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="postal_code">Postal Code</label>
+              <input type="text" id="postal_code" class="form-control" />
+              <span class="error-message" id="postal_code_error"></span>
+            </div>
+
+            <!-- Separator -->
+            <hr />
+
+            <!-- Password Change Section -->
+            <h4 class="settings-title">Change Password</h4>
+            <div class="form-group">
+              <label for="current_password">Current Password</label>
+              <input
+                type="password"
+                id="current_password"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="new_password">New Password</label>
+              <input type="password" id="new_password" class="form-control" />
+              <span class="error-message" id="newPassword_error"></span>
+            </div>
+            <div class="form-group">
+              <label for="confirm_password">Confirm New Password</label>
+              <input
+                type="password"
+                id="confirm_password"
+                class="form-control"
+              />
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn btn-save">
+              Save Changes
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const statusMessage = document.getElementById("status-message");
+        const form = document.getElementById("settings-form");
+        const submitBtn = document.getElementById("submit-btn");
+
+        try {
+          const response = await fetch("/user/settings", {
+            credentials: "include",
+          });
+          const user = await response.json();
+
+          if (user.success) {
+            window.originalUserData = { ...user.data };
+
+            document.getElementById("username").value = user.data.username;
+            document.getElementById("email").value = user.data.email;
+            document.getElementById("first_name").value =
+              user.data.first_name || "";
+            document.getElementById("last_name").value =
+              user.data.last_name || "";
+            document.getElementById("phone").value = user.data.phone || "";
+            document.getElementById("address").value = user.data.address || "";
+            document.getElementById("postal_code").value =
+              user.data.postal_code || "";
+          } else {
+            statusMessage.textContent =
+              "Error fetching user details: " + user.message;
+          }
+        } catch (error) {
+          console.error("Error loading user settings:", error);
+          statusMessage.textContent =
+            "An error occurred while loading user settings.";
+        }
+
+        const validators = {
+          first_name: (value) =>
+            /^[A-Za-z]+$/.test(value) || "First name can only contain letters.",
+          last_name: (value) =>
+            /^[A-Za-z]+$/.test(value) || "Last name can only contain letters.",
+          username: (value) =>
+            /^[a-zA-Z0-9_]{3,15}$/.test(value) ||
+            "Username must be 3-15 characters long, using letters, numbers, or underscores only.",
+          email: (value) =>
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Invalid email format.",
+          phone: (value) =>
+            (value.length <= 10 && !value.startsWith("0")) ||
+            "Phone must be <= 10 digits and not start with 0.",
+          postal_code: (value) =>
+            /^[1-9][0-9]{5}$/.test(value) ||
+            "Postal Code must be 6 digits and cannot start with 0.",
+          new_password: (value) =>
+            (value.length >= 6 &&
+              /[A-Z]/.test(value) &&
+              /\d/.test(value) &&
+              /[!@#$%^&*(),.?":{}|<>]/.test(value)) ||
+            "Password must be 6+ chars, include 1 uppercase, 1 number, 1 special char.",
+        };
+
+        function validateField(field) {
+          const input = document.getElementById(field);
+          const errorSpan = document.getElementById(`${field}_error`);
+          const validationRule = validators[field];
+          if (validationRule) {
+            const isValid = validationRule(input.value.trim());
+            errorSpan.textContent = isValid === true ? "" : isValid;
+          }
+          checkFormValidity(); // Check if form is valid after validating a field
+        }
+
+        function checkForChanges() {
+          const fields = [
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "address",
+            "postal_code",
+          ];
+          let isChanged = false;
+
+          fields.forEach((field) => {
+            const newValue = document.getElementById(field).value.trim();
+            const originalValue = window.originalUserData[field] || "";
+            if (newValue !== originalValue) {
+              isChanged = true;
+            }
+          });
+
+          const currentPassword = document
+            .getElementById("current_password")
+            .value.trim();
+          const newPassword = document
+            .getElementById("new_password")
+            .value.trim();
+          const confirmPassword = document
+            .getElementById("confirm_password")
+            .value.trim();
+
+          if (currentPassword || newPassword || confirmPassword) {
+            isChanged = true;
+          }
+
+          submitBtn.disabled = !isChanged;
+        }
+
+        function checkFormValidity() {
+          const fields = [
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "phone",
+            "postal_code",
+          ];
+          let allValid = true;
+
+          // Check each field validation
+          fields.forEach((field) => {
+            const input = document.getElementById(field);
+            const errorSpan = document.getElementById(`${field}_error`);
+
+            if (input && errorSpan && errorSpan.textContent) {
+              allValid = false; // If any error message exists, disable submit
+            }
+          });
+
+          // Password validation logic
+          const currentPassword = document
+            .getElementById("current_password")
+            .value.trim();
+          const newPassword = document
+            .getElementById("new_password")
+            .value.trim();
+          const confirmPassword = document
+            .getElementById("confirm_password")
+            .value.trim();
+
+          if (newPassword || confirmPassword) {
+            if (
+              !currentPassword ||
+              newPassword !== confirmPassword ||
+              document.getElementById("newPassword_error").textContent
+            ) {
+              allValid = false;
+            }
+          }
+
+          // Enable or disable the submit button
+          document.getElementById("submit-btn").disabled = !allValid;
+        }
+
+        document.querySelectorAll("#settings-form input").forEach((input) => {
+          input.addEventListener("input", () => {
+            validateField(input.id);
+            checkForChanges();
+            checkFormValidity();
+          });
+        });
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const currentPassword = document
+            .getElementById("current_password")
+            .value.trim();
+          const newPassword = document
+            .getElementById("new_password")
+            .value.trim();
+          const confirmPassword = document
+            .getElementById("confirm_password")
+            .value.trim();
+
+          if (currentPassword || newPassword || confirmPassword) {
+            if (!currentPassword) {
+              statusMessage.textContent =
+                "Please enter your current password to change it.";
+              return;
+            }
+            if (!newPassword || newPassword !== confirmPassword) {
+              statusMessage.textContent = "New passwords do not match.";
+              return;
+            }
+          }
+
+          const updatedData = {};
+          const fields = [
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "address",
+            "postal_code",
+          ];
+
+          fields.forEach((field) => {
+            const newValue = document.getElementById(field).value.trim();
+            const originalValue = window.originalUserData[field] || "";
+            if (newValue !== originalValue) {
+              updatedData[field] = newValue;
+            }
+          });
+
+          if (currentPassword && newPassword) {
+            updatedData.currentPassword = currentPassword;
+            updatedData.newPassword = newPassword;
+          }
+
+          if (Object.keys(updatedData).length === 0) {
+            statusMessage.textContent = "No changes detected.";
+            return;
+          }
+
+          try {
+            const response = await fetch("/user/settings", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify(updatedData),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+              statusMessage.textContent = "Settings updated successfully!";
+              statusMessage.className = "success-message";
+              setTimeout(() => window.location.reload(), 1500);
+            } else {
+              statusMessage.textContent =
+                result.message || "Failed to update settings.";
+            }
+          } catch (error) {
+            console.error("Error updating settings:", error);
+            statusMessage.textContent =
+              "An error occurred while updating settings.";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

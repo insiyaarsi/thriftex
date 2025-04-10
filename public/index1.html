@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - ThriftEx</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+            flex-direction: column;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .select-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .proceed-button {
+            background-color: #0f4c75;
+            color: #fff;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .proceed-button:hover {
+            background-color: #1e5d97;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Please Select How You Would Like to Sign In</h2>
+    
+    <!-- Dropdown Menu -->
+    <select id="userType" class="select-box">
+        <option value="U-signin.html">Sign In as a User</option>
+        <option value="S-signin.html">Sign In as a Seller</option>
+        <option value="admin-signin.html">Sign In as an Admin</option>
+    </select>
+
+    <!-- Proceed Button -->
+    <button class="proceed-button" onclick="redirectToSignIn()">Proceed</button>
+</div>
+
+<script>
+    function redirectToSignIn() {
+        // Get the selected option value
+        const selectedPage = document.getElementById("userType").value;
+        
+        // Redirect to the selected sign-in page
+        window.location.href = selectedPage;
+    }
+</script>
+
+</body>
+</html>

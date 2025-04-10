@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>FAQs Page - ThriftEx</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+
+    <style>
+      .accordion-item button {
+        font-size: 18px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+
+      .accordion-body p {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+  <body style="overflow-x: hidden">
+    <section class="preloader">
+      <div class="spinner">
+        <span class="sk-inner-circle"></span>
+      </div>
+    </section>
+
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <a class="navbar-brand" href="userHome.html">
+            <strong><span>Thrift</span>Ex</strong>
+          </a>
+
+          <div class="d-lg-none">
+            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+            <a href="wishlist.html" class="bi-heart custom-icon me-3"></a>
+            <a href="cart.html" class="bi-bag custom-icon"></a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto" style="padding-left: 5%; gap: 18px">
+              <li class="nav-item">
+                <a class="nav-link" href="userHome.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="products.html">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="sell.html">Sell</a>
+              </li>
+              <li class="nav-item"></li>
+              <li class="nav-item">
+                <a class="nav-link" href="orders.html">My orders</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="faq.html">FAQs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+            </ul>
+
+            <div class="d-none d-lg-block" style="margin-right: -4%">
+              <ul class="navbar-nav mx-auto">
+                <li>
+                  <a
+                    class="nav-link"
+                    href="user-dashboard.html"
+                    style="padding-right: 13px"
+                    >MyThriftEx</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="wishlist.html"
+                    class="bi-heart custom-icon me-3 icon"
+                    style="padding-left: 7%"
+                  ></a>
+                </li>
+                <li>
+                  <a href="cart.html" class="bi-bag custom-icon icon"></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="slick-custom">
+        <img
+          src="images/mert-kahveci-Mdp2PchgDM4-unsplash.jpg"
+          alt=""
+          style="height: 510px"
+        />
+
+        <div class="slick-bottom" style="background: transparent">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-10 col-12">
+                <h1>
+                  <span class="d-block text-primary"
+                    >Your favorite questions</span
+                  >
+                  <span class="d-block text-white"
+                    >and our answers to them</span
+                  >
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Replace ONLY the FAQ Section with the following -->
+      <section class="faq section-padding">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-12">
+              <h2>FAQ</h2>
+
+              <div class="accordion" id="accordionGeneral">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#accordionGeneralOne"
+                      aria-expanded="true"
+                      aria-controls="accordionGeneralOne"
+                    >
+                      What is ThriftEx?
+                    </button>
+                  </h2>
+
+                  <div
+                    id="accordionGeneralOne"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#accordionGeneral"
+                  >
+                    <div class="accordion-body">
+                      <p class="large-paragraph">
+                        ThriftEx is an online marketplace for buying and selling
+                        pre-loved clothing. We connect buyers and sellers in a
+                        secure and easy-to-use platform that supports
+                        negotiations, payments, shipping, and order tracking.
+                      </p>
+
+                      <p class="large-paragraph">
+                        It’s designed for fashion lovers who want great deals
+                        and eco-conscious sellers who want an easy-to-manage
+                        dashboard.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#accordionGeneralTwo"
+                      aria-expanded="false"
+                      aria-controls="accordionGeneralTwo"
+                    >
+                      What payment methods are accepted on ThriftEx?
+                    </button>
+                  </h2>
+
+                  <div
+                    id="accordionGeneralTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionGeneral"
+                  >
+                    <div class="accordion-body">
+                      <p class="large-paragraph">
+                        We accept secure online payments through Razorpay, which
+                        supports credit/debit cards, UPI, net banking, and major
+                        digital wallets.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#accordionGeneralThree"
+                      aria-expanded="false"
+                      aria-controls="accordionGeneralThree"
+                    >
+                      Can I cancel an order after payment?
+                    </button>
+                  </h2>
+
+                  <div
+                    id="accordionGeneralThree"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingThree"
+                    data-bs-parent="#accordionGeneral"
+                  >
+                    <div class="accordion-body">
+                      <p class="large-paragraph">
+                        You can request a cancellation before the seller ships
+                        the product. Once shipped, our return/refund policy will
+                        apply.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion" id="accordionProduct">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFour">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#accordionProductOne"
+                      aria-expanded="true"
+                      aria-controls="accordionProductOne"
+                    >
+                      What is your return/refund policy?
+                    </button>
+                  </h2>
+
+                  <div
+                    id="accordionProductOne"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingFour"
+                    data-bs-parent="#accordionProduct"
+                  >
+                    <div class="accordion-body">
+                      <p class="large-paragraph">
+                        We are currently not accepting any returns or providing
+                        refunds. We are working towards including that feature
+                        soon!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFive">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#accordionProductTwo"
+                      aria-expanded="false"
+                      aria-controls="accordionProductTwo"
+                    >
+                      When will I be charged for my order?
+                    </button>
+                  </h2>
+
+                  <div
+                    id="accordionProductTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingFive"
+                    data-bs-parent="#accordionProduct"
+                  >
+                    <div class="accordion-body">
+                      <p class="large-paragraph">
+                        You will be charged immediately after checkout, once the
+                        payment is successfully processed.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row" style="margin-left: 35px; margin-right: -106px">
+          <div class="col-lg col-10 me-auto mb-4">
+            <h4 class="text-white"><a href="#">Thrift</a>Ex</h4>
+            <p class="copyright-text text-muted mb-4 mb-lg-0">
+              Copyright © 2025 <strong>ThriftEx</strong>
+            </p>
+            <br />
+            <p class="copyright-text">
+              <a href="#" target="_blank"></a>
+            </p>
+          </div>
+
+          <div class="col-lg col-5">
+            <h5 class="text-white mb-3">Quick Links</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="userHome.html" class="footer-menu-link">Home</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="products.html" class="footer-menu-link"
+                  >All Products</a
+                >
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="sell.html" class="footer-menu-link">Sell Products</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="user-dashboard.html" class="footer-menu-link"
+                  >My ThriftEx</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-8">
+            <h5 class="text-white mb-3">Sitemap</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="about.html" class="footer-menu-link">About</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Privacy policy</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">FAQs</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-4">
+            <h5 class="text-white mb-3">Social</h5>
+
+            <ul
+              class="social-icon"
+              style="display: flex; flex-direction: column"
+            >
+              <li>
+                <a href="#" class="social-icon-link bi-youtube"> Youtube</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-whatsapp"> Whatsapp</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-instagram"> Instagram</a>
+              </li>
+
+              <li><a href="#" class="social-icon-link bi-twitter"> X</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p
+        style="
+          font-family: 'Euphoria Script';
+          font-size: 35px;
+          font-weight: 300;
+          color: white;
+          padding-top: 5%;
+          text-align: center;
+          text-decoration: underline;
+          margin-top: 45px;
+        "
+      >
+        Keep Styling, Keep Thrifting
+      </p>
+    </footer>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Headroom.js"></script>
+    <script src="js/jQuery.headroom.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>

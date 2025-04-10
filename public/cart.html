@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - ThriftEx</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+      .cart-item {
+        border-bottom: 1px solid #ddd;
+        padding: 15px 0;
+      }
+      .cart-item img {
+        max-width: 100px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .cart-summary {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+      }
+      .cart-summary p {
+        color: black;
+      }
+      .summary-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .summary-total {
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
+      .btn-checkout {
+        background-color: black;
+        color: white;
+        width: 100%;
+        border-radius: 5px;
+      }
+      .btn-checkout:hover {
+        background-color: #ff4400;
+        color: white;
+        border-color: #ff4400;
+      }
+
+      .remove-item-btn {
+        background: none;
+        border: none;
+        color: red;
+        cursor: pointer;
+      }
+      .remove-item-btn:hover {
+        text-decoration: underline;
+      }
+
+      .cart-details strong {
+        color: black;
+      }
+    </style>
+  </head>
+  <body style="overflow-x: hidden">
+    <main>
+      <div class="cart-content">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand" href="userHome.html">
+              <strong><span>Thrift</span>Ex</strong>
+            </a>
+
+            <div class="d-lg-none">
+              <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+              <a href="wishlist.html" class="bi-heart custom-icon me-3"></a>
+              <a href="cart.html" class="bi-bag custom-icon"></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul
+                class="navbar-nav mx-auto"
+                style="padding-left: 5%; gap: 18px"
+              >
+                <li class="nav-item">
+                  <a class="nav-link" href="userHome.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="products.html">Products</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="sell.html">Sell</a>
+                </li>
+                <li class="nav-item"></li>
+                <li class="nav-item">
+                  <a class="nav-link" href="orders.html">My orders</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="faq.html">FAQs</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">About</a>
+                </li>
+              </ul>
+
+              <div class="d-none d-lg-block" style="margin-right: -4%">
+                <ul class="navbar-nav mx-auto">
+                  <li>
+                    <a
+                      class="nav-link"
+                      href="user-dashboard.html"
+                      style="padding-right: 13px"
+                      >MyThriftEx</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="wishlist.html"
+                      class="bi-heart custom-icon me-3"
+                      style="padding-left: 7%"
+                    ></a>
+                  </li>
+                  <li><a href="cart.html" class="bi-bag custom-icon"></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <br /><br />
+        <section class="container mt-5">
+          <h2 class="text-center">Shopping Bag</h2>
+          <div class="row mt-4">
+            <!-- Cart Items -->
+            <div class="col-lg-8" id="cart-container">
+              <!-- Dynamic content will be added here -->
+            </div>
+
+            <!-- Summary Section -->
+            <div class="col-lg-4">
+              <div class="cart-summary">
+                <h5 class="summary-title">Order Summary</h5>
+                <p style="color: black">
+                  Order value: <span id="order-value">₹0.00</span>
+                </p>
+                <p>
+                  Platform Charges: <span id="platform-charge">₹50.00</span>
+                </p>
+                <p style="color: black">
+                  Delivery: <span id="delivery-fee">FREE</span>
+                </p>
+                <p class="summary-total" style="color: black">
+                  Total: <span id="cart-total">₹0.00</span>
+                </p>
+                <button class="btn btn-checkout mt-3" onclick="openRazorpay()">
+                  Continue to Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <br /><br />
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row" style="margin-left: 35px; margin-right: -106px">
+          <div class="col-lg col-10 me-auto mb-4">
+            <h4 class="text-white"><a href="#">Thrift</a>Ex</h4>
+            <p class="copyright-text text-muted mb-4 mb-lg-0">
+              Copyright © 2025 <strong>ThriftEx</strong>
+            </p>
+            <br />
+            <p class="copyright-text">
+              <a href="#" target="_blank"></a>
+            </p>
+          </div>
+
+          <div class="col-lg col-5">
+            <h5 class="text-white mb-3">Quick Links</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="userHome.html" class="footer-menu-link">Home</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="products.html" class="footer-menu-link"
+                  >All Products</a
+                >
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="sell.html" class="footer-menu-link">Sell Products</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="user-dashboard.html" class="footer-menu-link"
+                  >My ThriftEx</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-8">
+            <h5 class="text-white mb-3">Sitemap</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="about.html" class="footer-menu-link">About</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Privacy policy</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">FAQs</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-4">
+            <h5 class="text-white mb-3">Social</h5>
+
+            <ul
+              class="social-icon"
+              style="display: flex; flex-direction: column"
+            >
+              <li>
+                <a href="#" class="social-icon-link bi-youtube"> Youtube</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-whatsapp"> Whatsapp</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-instagram"> Instagram</a>
+              </li>
+
+              <li><a href="#" class="social-icon-link bi-twitter"> X</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p
+        style="
+          font-family: 'Euphoria Script';
+          font-size: 35px;
+          font-weight: 300;
+          color: white;
+          padding-top: 5%;
+          text-align: center;
+          text-decoration: underline;
+          margin-top: 45px;
+        "
+      >
+        Keep Styling, Keep Thrifting
+      </p>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const cartContainer = document.getElementById("cart-container");
+        const cartTotalElement = document.getElementById("cart-total");
+        const orderValueElement = document.getElementById("order-value");
+
+        async function fetchCartItems() {
+          try {
+            console.log("Fetching cart items...");
+            const response = await fetch("http://localhost:3000/api/cart", {
+              method: "GET",
+              credentials: "include",
+            });
+            const data = await response.json();
+
+            if (data.success && data.data.length > 0) {
+              renderCartItems(data.data);
+              updateCartTotal(data.data);
+            } else {
+              cartContainer.innerHTML =
+                "<p class='text-center'>Your shopping bag is empty.</p>";
+            }
+          } catch (error) {
+            console.error("Error fetching cart items:", error);
+            cartContainer.innerHTML =
+              "<p class='text-center'>Failed to load cart items.</p>";
+          }
+        }
+
+        function renderCartItems(items) {
+          cartContainer.innerHTML = "";
+          items.forEach((item) => {
+            const itemDiv = document.createElement("div");
+            itemDiv.classList.add("row", "cart-item", "align-items-center");
+            itemDiv.innerHTML = `
+                        <div class="col-lg-2 col-4 cart-details">
+                            <img src="${
+                              item.image_url || "placeholder.jpg"
+                            }" alt="${
+              item.title || "Product"
+            }" class="img-fluid">
+                        </div>
+                        <div class="col-lg-6 col-8">
+                            <h5><strong>${
+                              item.title || "Untitled Product"
+                            }</strong></h5>
+                            <p><strong style="color: black;">Color:</strong> ${
+                              item.color || "Not specified"
+                            }</p>
+                            <p><strong style="color: black;">Size:</strong> ${
+                              item.size || "Not specified"
+                            }</p>
+                            <p><strong style="color: black;">Price:</strong> ₹${
+                              item.price
+                                ? parseFloat(item.price).toFixed(2)
+                                : "0.00"
+                            }</p>
+                        </div>
+                        <div class="col-lg-2 col-4 text-end">
+                            <button class="remove-item-btn" data-cart-id="${
+                              item.cart_id
+                            }" title="Remove from Cart">
+                                <i class="bi-trash"></i>
+                            </button>
+                        </div>
+                    `;
+            cartContainer.appendChild(itemDiv);
+          });
+        }
+
+        function updateCartTotal(items) {
+          const total = items.reduce(
+            (sum, item) => sum + (parseFloat(item.price) || 0),
+            0
+          ); // ✅ Ensures price is always a number
+          const platformCharge = 50; // Fixed platform charge
+          const grandTotal = total + platformCharge;
+          document.getElementById(
+            "cart-total"
+          ).textContent = `₹${grandTotal.toFixed(2)}`;
+          document.getElementById(
+            "order-value"
+          ).textContent = `₹${total.toFixed(2)}`;
+
+          console.log("Updated Cart Total:", total); // ✅ Debugging Log
+        }
+
+        cartContainer.addEventListener("click", async (e) => {
+          const target = e.target.closest("button");
+
+          if (target && target.classList.contains("remove-item-btn")) {
+            const cartId = target.getAttribute("data-cart-id");
+            try {
+              const response = await fetch(
+                `http://localhost:3000/api/cart/${cartId}`,
+                {
+                  method: "DELETE",
+                }
+              );
+              const data = await response.json();
+
+              if (data.success) {
+                fetchCartItems();
+              } else {
+                alert("Failed to remove item.");
+              }
+            } catch (error) {
+              console.error("Error removing item:", error);
+            }
+          }
+        });
+
+        fetchCartItems();
+      });
+
+      window.openRazorpay = async function () {
+        try {
+          console.log("Checkout button clicked! Fetching order...");
+
+          // Fetch order details from the server
+          const response = await fetch(
+            "http://localhost:3000/api/create-order",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          const orderData = await response.json();
+
+          if (!orderData.success) {
+            alert("Error creating order. Please try again.");
+            return;
+          }
+
+          console.log("Order created successfully:", orderData);
+
+          const options = {
+            key: "rzp_test_ZwTctSYw0vO989", // Razorpay Test Key ID
+            amount: orderData.amount, // Amount in paisa (₹500 = 50000 paisa)
+            currency: "INR",
+            name: "ThriftEx",
+            description: "Secure Payment",
+            image: "logo.png", // Your website logo
+            order_id: orderData.order_id, // Razorpay Order ID
+            handler: async function (response) {
+              console.log("Payment Success!", response);
+
+              // ✅ Send payment details to server for verification
+              const verifyResponse = await fetch(
+                "http://localhost:3000/api/verify-payment",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature,
+                  }),
+                }
+              );
+
+              const verifyData = await verifyResponse.json();
+              if (verifyData.success) {
+                alert("Payment successful! Redirecting...");
+
+                // ✅ Redirect user to order success page
+                window.location.href = "order-success.html";
+              } else {
+                alert("Payment verification failed. Please try again.");
+              }
+            },
+            prefill: {
+              name: "Test User",
+              email: "user@example.com",
+              contact: "9999999999",
+            },
+            theme: {
+              color: "#000000",
+            },
+          };
+
+          console.log("Opening Razorpay modal...");
+          const rzp = new Razorpay(options);
+          rzp.open();
+        } catch (error) {
+          console.error("Error initializing Razorpay:", error);
+        }
+      };
+    </script>
+  </body>
+</html>

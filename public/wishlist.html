@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wishlist</title>
+    <!-- Ensure these files exist in your public/css folder -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="userHome.html">
+          <strong><span>Thrift</span>Ex</strong>
+        </a>
+
+        <div class="d-lg-none">
+          <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+          <a href="wishlist.html" class="bi-heart custom-icon me-3"></a>
+          <a href="cart.html" class="bi-bag custom-icon"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto" style="padding-left: 5%; gap: 18px">
+            <li class="nav-item">
+              <a class="nav-link" href="userHome.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="products.html">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="sell.html">Sell</a>
+            </li>
+            <li class="nav-item"></li>
+            <li class="nav-item">
+              <a class="nav-link" href="orders.html">My orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="faq.html">FAQs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+          </ul>
+
+          <div class="d-none d-lg-block" style="margin-right: -4%">
+            <ul class="navbar-nav mx-auto">
+              <li>
+                <a
+                  class="nav-link"
+                  href="user-dashboard.html"
+                  style="padding-right: 13px"
+                  >MyThriftEx</a
+                >
+              </li>
+              <li>
+                <a
+                  href="wishlist.html"
+                  class="bi-heart custom-icon me-3 icon"
+                  style="padding-left: 7%"
+                ></a>
+              </li>
+              <li><a href="cart.html" class="bi-bag custom-icon icon"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <br /><br />
+
+    <main class="container mt-5">
+      <h2 class="mb-4 text-center" style="font-size: 45px">My Wishlist</h2>
+      <div id="wishlist-container" class="row">
+        <!-- Wishlist items will be dynamically added here -->
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row" style="margin-left: 35px; margin-right: -106px">
+          <div class="col-lg col-10 me-auto mb-4">
+            <h4 class="text-white"><a href="#">Thrift</a>Ex</h4>
+            <p class="copyright-text text-muted mb-4 mb-lg-0">
+              Copyright © 2025 <strong>ThriftEx</strong>
+            </p>
+            <br />
+            <p class="copyright-text">
+              <a href="#" target="_blank"></a>
+            </p>
+          </div>
+
+          <div class="col-lg col-5">
+            <h5 class="text-white mb-3">Quick Links</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="userHome.html" class="footer-menu-link">Home</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="products.html" class="footer-menu-link"
+                  >All Products</a
+                >
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="sell.html" class="footer-menu-link">Sell Products</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="user-dashboard.html" class="footer-menu-link"
+                  >My ThriftEx</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-8">
+            <h5 class="text-white mb-3">Sitemap</h5>
+
+            <ul
+              class="footer-menu d-flex flex-wrap"
+              style="flex-direction: column"
+            >
+              <li class="footer-menu-item">
+                <a href="about.html" class="footer-menu-link">About</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Privacy policy</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">FAQs</a>
+              </li>
+
+              <li class="footer-menu-item">
+                <a href="#" class="footer-menu-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg col-4">
+            <h5 class="text-white mb-3">Social</h5>
+
+            <ul
+              class="social-icon"
+              style="display: flex; flex-direction: column"
+            >
+              <li>
+                <a href="#" class="social-icon-link bi-youtube"> Youtube</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-whatsapp"> Whatsapp</a>
+              </li>
+
+              <li>
+                <a href="#" class="social-icon-link bi-instagram"> Instagram</a>
+              </li>
+
+              <li><a href="#" class="social-icon-link bi-twitter"> X</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p
+        style="
+          font-family: 'Euphoria Script';
+          font-size: 35px;
+          font-weight: 300;
+          color: white;
+          padding-top: 5%;
+          text-align: center;
+          text-decoration: underline;
+          margin-top: 45px;
+        "
+      >
+        Keep Styling, Keep Thrifting
+      </p>
+    </footer>
+
+    <!-- Include the Bootstrap bundle from public/js folder -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- Optional: include jQuery if needed -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/Headroom.js"></script>
+    <script src="js/jQuery.headroom.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/custom.js"></script>
+
+    <script>
+      // Fetch and render wishlist items when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("http://localhost:3000/api/wishlist", { credentials: "include" })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Wishlist GET response:", data);
+            if (data.success) {
+              const container = document.getElementById("wishlist-container");
+              container.innerHTML = "";
+              data.data.forEach((item) => {
+                // ✅ Check if the product is sold
+                const isSold = item.status === "Sold";
+
+                // ✅ If sold, show "Out of Stock" instead of "Add to Cart"
+                const cartButtonHTML = isSold
+                  ? `<p class="text-danger"><strong>Product Out of Stock</strong></p>`
+                  : `<button class="btn btn-primary add-to-cart-from-wishlist" style="margin-top: 20px"
+                            data-id="${item.product_id}"
+                            data-size="${item.size}"
+                            data-color="${item.color}"
+                            data-price="${item.price}"
+                            data-image="${item.image_url}">
+                    Add to Cart
+                  </button>`;
+
+                // Each item includes a remove button and an "Add to Cart" button (if available)
+                const itemHTML = `
+                <div class="col-lg-3 col-12 mb-3">
+                  <div class="product-thumb position-relative">
+                    <!-- Remove button (cross) -->
+                    <button class="btn btn-sm btn-danger remove-wishlist" data-id="${item.wishlist_id}" 
+                            style="position: absolute; top: 5px; right: 5px;">&times;</button>
+                    <img src="${item.image_url}" class="img-fluid product-image product-listing-image" alt="${item.title}">
+                    <div class="product-info">
+                      <div class="product-info-content">
+                      <h5>${item.title}</h5>
+                      <p>₹${item.price}</p>
+                      </div>
+                      ${cartButtonHTML}
+                    </div>
+                  </div>
+                </div>
+              `;
+                container.innerHTML += itemHTML;
+              });
+
+              attachWishlistEventListeners();
+            } else {
+              alert("Could not load wishlist items.");
+            }
+          })
+          .catch((error) => console.error("Error fetching wishlist:", error));
+      });
+
+      // Function to attach event listeners for dynamically rendered wishlist buttons
+      function attachWishlistEventListeners() {
+        // Event listener for remove buttons
+        document.querySelectorAll(".remove-wishlist").forEach((button) => {
+          button.addEventListener("click", function (event) {
+            event.preventDefault();
+            const wishlistId = this.getAttribute("data-id");
+            if (!confirm("Remove this item from your wishlist?")) return;
+            fetch(`http://localhost:3000/api/wishlist/remove/${wishlistId}`, {
+              method: "DELETE",
+              credentials: "include",
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                alert(data.message);
+                this.closest(".col-lg-3").remove(); // Remove the item from the DOM
+              })
+              .catch((error) =>
+                console.error("Error removing wishlist item:", error)
+              );
+          });
+        });
+
+        // ✅ Ensure "Add to Cart" buttons exist before adding event listeners
+        document
+          .querySelectorAll(".add-to-cart-from-wishlist")
+          .forEach((button) => {
+            button.addEventListener("click", function (event) {
+              event.preventDefault();
+              const productId = this.getAttribute("data-id");
+              const size = this.getAttribute("data-size") || "M";
+              const color = this.getAttribute("data-color") || "Black";
+              const price = this.getAttribute("data-price");
+              const image_url = this.getAttribute("data-image");
+
+              console.log("Add-to-cart clicked from wishlist:", {
+                productId,
+                size,
+                color,
+                price,
+                image_url,
+              });
+
+              fetch("http://localhost:3000/api/cart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                  productId,
+                  size,
+                  color,
+                  quantity: 1,
+                  price,
+                  image_url,
+                }),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  alert(data.message);
+                })
+                .catch((error) =>
+                  console.error("Error adding item to cart:", error)
+                );
+            });
+          });
+      }
+    </script>
+  </body>
+</html>

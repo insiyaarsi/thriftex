@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title>Seller Dashboard - ThriftEx</title>
+    <!-- CSS & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: white;
+      }
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="container" style="margin-left: -15px !important">
+        <!-- <div class="row"> -->
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 col-12 mb-4 sidebar">
+          <h3 id="user-dashboard-title">Seller Dashboard</h3>
+          <a href="seller-dashboard.html"
+            ><i class="bi bi-house-door-fill"></i> Dashboard</a
+          >
+          <a href="create-listing.html"
+            ><i class="bi bi-bag-check-fill"></i> Create Listing</a
+          >
+          <a href="previous-listing.html"
+            ><i class="bi bi-list-ul"></i> Previous Listings</a
+          >
+          <a href="seller-offer.html"><i class="bi bi-tag-fill"></i> Offers</a>
+          <a href="unsold-listing.html"
+            ><i class="bi bi-x-circle-fill"></i> Unsold</a
+          >
+          <a href="seller-orders.html"
+            ><i class="bi bi-list-check"></i> Orders</a
+          >
+          <a href="#" id="logout-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+
+        <div id="session-expired-message" style="display: none; color: red; font-weight: bold; padding: 10px; background-color: #ffe6e6; text-align: center;">
+          Your session has expired. Redirecting to login...
+        </div>
+
+        <!--Main Content-->
+        <div class="col-lg-11 col-md-10 col-12 mb-4 main-content">
+          <h2 id="welcome-message" class="font-weight: 800; font-size: 42px">
+            Hello, <span id="seller-name">User</span>
+          </h2>
+          <p>
+            Welcome to your Dashboard. Use the sidebar to navigate through your
+            options.
+          </p>
+          <p id="dashboard-status-message" class="error-message"></p>
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card p-3">
+                <h5>Total Sales</h5>
+                <p id="totalSales">₹0</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card p-3">
+                <h5>Total Listings</h5>
+                <p id="totalListings">0</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card p-3">
+                <h5>Unsold Items</h5>
+                <p id="unsoldItems">0</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card p-3">
+                <h5>Avg. Selling Price</h5>
+                <p id="avgSellingPrice">₹0</p>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-4">Sales Analytics</h4>
+          <canvas id="salesAnalyticsChart" style="max-height: 300px"></canvas>
+
+          <h4 class="mt-4">Monthly Sales</h4>
+          <canvas id="monthlySalesChart" style="max-height: 300px"></canvas>
+
+          <h4 class="mt-4">Recent Listings</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recentListingsTable"></tbody>
+          </table>
+
+          <h4 class="mt-4">Unsold Listings</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Condition</th>
+                <th>Date Created</th>
+              </tr>
+            </thead>
+            <tbody id="unsoldListingsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const dashboardStatusMessage = document.getElementById(
+          "dashboard-status-message"
+        );
+
+        try {
+          const response = await fetch("/api/listings/dashboard", {
+            method: "GET",
+            credentials: "include",
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.sellerName) {
+            const {
+              dashboardData,
+              recentListings,
+              unsoldListings,
+              salesDistribution,
+              monthlySales,
+            } = result;
+
+            document.getElementById(
+              "seller-name"
+            ).textContent = `${result.sellerName}`;
+            document.getElementById("totalSales").textContent = `₹${parseFloat(
+              dashboardData.totalSales
+            ).toFixed(2)}`;
+            document.getElementById("totalListings").textContent =
+              dashboardData.totalListings;
+            document.getElementById("unsoldItems").textContent =
+              dashboardData.unsoldItems;
+            document.getElementById(
+              "avgSellingPrice"
+            ).textContent = `₹${parseFloat(
+              dashboardData.avgSellingPrice
+            ).toFixed(2)}`;
+
+            // Populate Recent Listings
+            const recentListingsTable = document.getElementById(
+              "recentListingsTable"
+            );
+            recentListings.forEach((listing) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+              <td><img src="${listing.image_url}" alt="${
+                listing.title
+              }" style="width: 50px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
+                            <td>${listing.title}</td>
+                            <td>${listing.category}</td>
+                            <td>₹${parseFloat(listing.price).toFixed(2)}</td>
+                            <td>${listing.status}</td>
+                        `;
+              recentListingsTable.appendChild(row);
+            });
+
+            // Populate Unsold Listings
+            const unsoldListingsTable = document.getElementById(
+              "unsoldListingsTable"
+            );
+            unsoldListings.forEach((listing) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+              <td><img src="${listing.image_url}" alt="${
+                listing.title
+              }" style="width: 50px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
+                            <td>${listing.title}</td>
+                            <td>${listing.category}</td>
+                            <td>₹${parseFloat(listing.price).toFixed(2)}</td>
+                            <td>${listing.condition1}</td>
+                            <td>${new Date(
+                              listing.created_at
+                            ).toLocaleDateString()}</td>
+                        `;
+              unsoldListingsTable.appendChild(row);
+            });
+
+            // Sales Analytics Chart
+            new Chart(document.getElementById("salesAnalyticsChart"), {
+              type: "pie",
+              data: {
+                labels: ["Sold", "Unsold"],
+                datasets: [
+                  {
+                    data: salesDistribution,
+                    backgroundColor: ["rgba(255, 68, 0, 1)", "rgba(0,0,0,1)"],
+                    // borderColor: "black",
+                  },
+                ],
+              },
+            });
+
+            // Monthly Sales Chart
+            new Chart(document.getElementById("monthlySalesChart"), {
+              type: "bar",
+              data: {
+                labels: Object.keys(monthlySales),
+                datasets: [
+                  {
+                    label: "Sales (₹)",
+                    data: Object.values(monthlySales),
+                    backgroundColor: "rgba(255, 68, 0, 0.5)",
+                    borderColor: "rgba(255, 68, 0, 1)",
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: { responsive: true, maintainAspectRatio: false },
+            });
+          } else {
+            dashboardStatusMessage.textContent = `Error: ${result.message}`;
+          }
+        } catch (error) {
+          console.error("Error fetching dashboard data:", error);
+          dashboardStatusMessage.textContent =
+            "An error occurred while fetching dashboard data.";
+        }
+      });
+
+
+      function showSessionMessageAndRedirect() {
+        const msg = document.getElementById("session-expired-message");
+        msg.style.display = "block";
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000); // 2-second delay
+      }
+    
+      // ✅ Seller Session Check
+      async function checkSellerSession() {
+        try {
+          const res = await fetch("/api/listings/dashboard", {
+            method: "GET",
+            credentials: "include"
+          });
+    
+          const data = await res.json();
+          if (!data.success || !data.sellerName) {
+            showSessionMessageAndRedirect();
+          }
+        } catch (err) {
+          showSessionMessageAndRedirect();
+        }
+      }
+    
+      // ✅ Check session on page load
+      document.addEventListener("DOMContentLoaded", async function () {
+        await checkSellerSession();
+        document.body.style.display = "block"; // Show only if valid
+      });
+    
+      // ✅ Recheck session on browser back (bfcache)
+      window.addEventListener("pageshow", function (event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+          checkSellerSession();
+        }
+      });
+    
+      // ✅ Logout Logic
+      document.getElementById("logout-link").addEventListener("click", async function (e) {
+        e.preventDefault();
+        try {
+          const res = await fetch("/api/logout", {
+            method: "POST",
+            credentials: "include"
+          });
+    
+          const data = await res.json();
+          if (data.success) {
+            window.location.href = "index.html";
+          } else {
+            alert("Logout failed. Try again.");
+          }
+        } catch (error) {
+          console.error("Logout error:", error);
+          alert("An error occurred during logout.");
+        }
+      });
+    
+      // ✅ Prevent going back to dashboard after logout
+      if (window.history && window.history.pushState) {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+          window.history.go(1);
+        };
+      }
+
+
+    </script>
+  </body>
+</html>

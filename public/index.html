@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In - ThriftEx</title>
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("images/allison-christine-wV7UfVeI84w-unsplash.jpg");
+        background-size: cover;
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Prevent repeating */
+        position: relative; /* Needed for the overlay */
+      }
+
+      /* Add a black overlay */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+        z-index: 1; /* Ensure the overlay is above the background */
+      }
+
+      .container {
+        position: relative; /* Ensure content is above the overlay */
+        z-index: 2; /* Higher than the overlay */
+        display: flex;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 800px;
+      }
+
+      .left-section {
+        background-color: #f9f9f9;
+        color: black;
+        width: 50%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .right-section {
+        width: 50%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .right-section h2 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .input-field {
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 16px;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .sign-in-button {
+        background-color: black;
+        color: #fff;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .sign-in-button:hover {
+        background-color: #ff4400;
+        color: white;
+      }
+
+      .google-button {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 12px;
+        font-size: 16px;
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .google-button img {
+        width: 20px;
+      }
+
+      .left-section h2 {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+
+      .left-section h1 {
+        font-size: 50px;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .success-message {
+        color: green;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .dropdown {
+        margin-bottom: 15px;
+        padding: 10px;
+        width: 100%;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body style="overflow-x: hidden">
+    <div class="container">
+      <!-- Left Section -->
+      <div class="left-section">
+        <h2>Welcome to</h2>
+        <h1>Thrift<span style="color: #ff4400">Ex</span></h1>
+      </div>
+
+      <!-- Right Section -->
+      <div class="right-section">
+        <h2>Sign In</h2>
+
+        <!-- Dropdown for user role selection -->
+        <select id="user-role" class="dropdown" name="user-role">
+          <option value="user">User Sign-In</option>
+          <option value="seller">Seller Sign-In</option>
+          <option value="admin">Admin Sign-In</option>
+        </select>
+
+        <form id="signin-form">
+          <input
+            type="text"
+            id="username"
+            class="input-field"
+            placeholder="Username"
+            required
+          />
+          <p id="username-error" class="error-message"></p>
+
+          <input
+            type="password"
+            id="password"
+            class="input-field"
+            placeholder="Password"
+            required
+          />
+          <p id="password-error" class="error-message"></p>
+
+          <button type="submit" id="signin-button" class="sign-in-button">
+            Sign In
+          </button>
+
+          <!-- Dynamic Sign-Up Link (Only for Users and Sellers) -->
+          <p id="signup-link">
+            Don't have an account?
+            <a id="signup-url" href="U-signup.html"><b>Sign Up</b></a>
+          </p>
+
+          <p id="signin-status" class="error-message"></p>
+        </form>
+
+        <!-- Google Sign-In (Hidden for Admins) -->
+        <div id="google-signin">
+          <p>Or sign in with:</p>
+          <a id="google-signin-link" href="/auth/google/user">
+            <button type="button" class="google-button">
+              <img
+                src="https://developers.google.com/identity/images/g-logo.png"
+                alt="Google Logo"
+              />
+              Sign in with Google
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const signinForm = document.getElementById("signin-form");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const signinButton = document.getElementById("signin-button");
+        const signinStatus = document.getElementById("signin-status");
+        const userRole = document.getElementById("user-role");
+        const signupLink = document.getElementById("signup-link");
+        const signupUrl = document.getElementById("signup-url");
+        const googleSignin = document.getElementById("google-signin");
+        const googleSigninLink = document.getElementById("google-signin-link");
+
+        // Handle role change
+        userRole.addEventListener("change", function () {
+          const selectedRole = userRole.value;
+
+          // Set appropriate API endpoint
+          let apiEndpoint = "/api/users/signin";
+          let googleAuthURL = "/auth/google/user"; // Default Google sign-in for users
+
+          if (selectedRole === "seller") {
+            apiEndpoint = "/api/sellers/signin";
+            googleAuthURL = "/auth/google/seller"; // ✅ Corrected Seller Google Auth Route
+            signupUrl.href = "S-signup.html";
+            signupLink.classList.remove("hidden");
+            googleSignin.classList.remove("hidden");
+          } else if (selectedRole === "admin") {
+            apiEndpoint = "/api/admin-signin"; // ✅ Corrected Admin API Route
+            signupLink.classList.add("hidden"); // Hide Sign-Up for Admins
+            googleSignin.classList.add("hidden"); // Hide Google Sign-In for Admins
+          } else {
+            apiEndpoint = "/api/users/signin";
+            googleAuthURL = "/auth/google/user";
+            signupUrl.href = "U-signup.html";
+            signupLink.classList.remove("hidden");
+            googleSignin.classList.remove("hidden");
+          }
+
+          // Update Google Sign-In Link
+          googleSigninLink.href = googleAuthURL;
+          signinForm.dataset.api = apiEndpoint;
+        });
+
+        signinForm.addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const username = usernameInput.value.trim();
+          const password = passwordInput.value.trim();
+          const apiEndpoint = signinForm.dataset.api || "/api/users/signin";
+
+          signinButton.disabled = true;
+          signinButton.innerText = "Signing in...";
+
+          try {
+            const response = await fetch(apiEndpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              let redirectPage = data.redirect || "userHome.html";
+              window.location.href = redirectPage;
+            } else {
+              signinStatus.innerText = data.message || "Invalid credentials.";
+              signinButton.disabled = false;
+              signinButton.innerText = "Sign In";
+            }
+          } catch {
+            signinStatus.innerText = "An error occurred. Try again.";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

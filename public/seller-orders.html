@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Orders</title>
+    <!-- CSS & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="container" style="margin-left: -15px !important">
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 col-12 mb-4 sidebar">
+          <h3 id="user-dashboard-title">Seller Dashboard</h3>
+          <a href="seller-dashboard.html"
+            ><i class="bi bi-house-door-fill"></i> Dashboard</a
+          >
+          <a href="create-listing.html"
+            ><i class="bi bi-bag-check-fill"></i> Create Listing</a
+          >
+          <a href="previous-listing.html"
+            ><i class="bi bi-list-ul"></i> Previous Listings</a
+          >
+          <a href="seller-offer.html"><i class="bi bi-tag-fill"></i> Offers</a>
+          <a href="unsold-listing.html"
+            ><i class="bi bi-x-circle-fill"></i> Unsold</a
+          >
+          <a href="seller-orders.html"
+            ><i class="bi bi-list-check"></i> Orders</a
+          >
+          <a href="index.html"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+
+        <!--Main Content-->
+        <div class="col-lg-11 col-md-10 col-12 mb-4 main-content">
+          <div style="height: 35px" class="block-spacer"></div>
+          <h2>Manage Orders</h2>
+
+          <!-- Error Message Display -->
+          <p id="error-message" class="error-message"></p>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Buyer</th>
+                <th>Total Price</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTable">
+              <!-- Orders will be dynamically inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const errorMessage = document.getElementById("error-message");
+
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/orders/seller",
+            {
+              method: "GET",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const data = await response.json();
+
+          if (data.success) {
+            const ordersTable = document.getElementById("ordersTable");
+            ordersTable.innerHTML = "";
+
+            data.orders.forEach((order) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                            <td>${order.order_id}</td>
+                            <td>${order.buyer_name}</td>
+                            <td>₹${parseFloat(order.total_price).toFixed(
+                              2
+                            )}</td>
+                            <td>${order.status}</td>
+                            
+                        `;
+              ordersTable.appendChild(row);
+            });
+
+            document
+              .querySelectorAll(".status-dropdown")
+              .forEach((dropdown) => {
+                dropdown.addEventListener("change", async function () {
+                  const orderId = this.getAttribute("data-order-id");
+                  const newStatus = this.value;
+
+                  try {
+                    const updateResponse = await fetch(
+                      `http://localhost:3000/api/orders/update-status/${orderId}`,
+                      {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                        credentials: "include",
+                        body: JSON.stringify({ status: newStatus }),
+                      }
+                    );
+
+                    console.log("Fetched seller orders:", data);
+
+
+                    const updateResult = await updateResponse.json();
+                    if (updateResult.success) {
+                      errorMessage.innerText =
+                        "Order status updated successfully!";
+                      errorMessage.style.color = "green";
+                    } else {
+                      errorMessage.innerText = "Failed to update order status.";
+                      errorMessage.style.color = "red";
+                    }
+                  } catch (error) {
+                    console.error("Error updating order status:", error);
+                    errorMessage.innerText =
+                      "An error occurred while updating order status.";
+                    errorMessage.style.color = "red";
+                  }
+                });
+              });
+          } else {
+            errorMessage.innerText = "No orders found.";
+          }
+        } catch (error) {
+          console.error("Error fetching seller orders:", error);
+          errorMessage.innerText = "An error occurred while fetching orders.";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complaints - ThriftEx</title>
+
+    <!-- CSS & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/slick.css" />
+
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="container" style="margin-left: -15px !important">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <h4 class="text-left">Admin Dashboard</h4>
+          <a href="admin-dashboard.html"
+            ><i class="bi bi-house-door-fill"></i> Dashboard</a
+          >
+          <a href="complaints.html"
+            ><i class="bi bi-chat-left-dots-fill"></i> Reviews/Complaints</a
+          >
+          <a href="admin-orders.html" class="active"
+            ><i class="bi bi-folder-check"></i> Manage Orders</a
+          >
+          <a href="index.html"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-11 col-md-10 col-12 mb-4 main-content">
+          <h2>Complaints</h2>
+          <p>Manage and resolve user complaints.</p>
+
+          <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th>Complaint ID</th>
+                <th>User</th>
+                <th>Order ID</th>
+                <th>Image</th>
+                <th>Rating</th>
+                <th>Complaint</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="complaintsTable">
+              <tr>
+                <td colspan="7" class="text-center">Loading complaints...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const response = await fetch("/api/complaints", {
+            credentials: "include",
+          });
+          const result = await response.json();
+
+          if (
+            !result.success ||
+            !result.complaints ||
+            result.complaints.length === 0
+          ) {
+            document.getElementById("complaintsTable").innerHTML =
+              '<tr><td colspan="7" class="text-center text-danger">No complaints found.</td></tr>';
+            return;
+          }
+
+          const complaintsTable = document.getElementById("complaintsTable");
+          complaintsTable.innerHTML = ""; // Clear existing rows
+
+          result.complaints.forEach((complaint) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                        <td>${complaint.id}</td>
+                        <td>${complaint.username}</td>
+                        <td>${complaint.order_id}</td>
+                        <td>${
+                          complaint.image_url
+                            ? `<a href="${complaint.image_url}" target="_blank"><img src="${complaint.image_url}" width="70"/></a>`
+                            : "No image"
+                        }</td>
+                        <td>${complaint.rating} ★</td>
+                        <td>${complaint.complaint_text}</td>
+                        <td><span class="badge ${
+                          complaint.status === "Resolved"
+                            ? "bg-success"
+                            : "bg-warning"
+                        }">${complaint.status}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-success resolve-btn" data-id="${
+                              complaint.id
+                            }" ${
+              complaint.status === "Resolved" ? "disabled" : ""
+            }>
+                                Mark as Resolved
+                            </button>
+                        </td>
+                    `;
+            complaintsTable.appendChild(row);
+          });
+
+          document.querySelectorAll(".resolve-btn").forEach((button) => {
+            button.addEventListener("click", function () {
+              const complaintId = this.getAttribute("data-id");
+              resolveComplaint(complaintId);
+            });
+          });
+        } catch (error) {
+          console.error("Error fetching complaints:", error);
+          document.getElementById("complaintsTable").innerHTML =
+            '<tr><td colspan="7" class="text-center text-danger">Error loading complaints.</td></tr>';
+        }
+      });
+
+      function resolveComplaint(complaintId) {
+        fetch(`/api/complaints/${complaintId}`, {
+          // ✅ Fixed missing '/'
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: "Resolved" }),
+          credentials: "include",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Complaint marked as resolved.");
+              location.reload();
+            } else {
+              alert("Failed to update complaint status.");
+            }
+          })
+          .catch((error) => console.error("Error updating complaint:", error));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Product Detail - ThriftEx</title>
+
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Euphoria+Script&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet" />
+
+    <style>
+      .hidden {
+        display: none;
+      }
+
+      #hidden-text {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="preloader">
+      <div class="spinner">
+        <span class="sk-inner-circle"></span>
+      </div>
+    </section>
+
+    <main>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <a class="navbar-brand" href="userHome.html">
+            <strong><span>Thrift</span>Ex</strong>
+          </a>
+
+          <div class="d-lg-none">
+            <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
+            <a href="wishlist.html" class="bi-heart custom-icon me-3"></a>
+            <a href="cart.html" class="bi-bag custom-icon"></a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto" style="padding-left: 5%; gap: 18px">
+              <li class="nav-item">
+                <a class="nav-link" href="userHome.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="products.html">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="sell.html">Sell</a>
+              </li>
+              <li class="nav-item"></li>
+              <li class="nav-item">
+                <a class="nav-link" href="orders.html">My orders</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faq.html">FAQs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+            </ul>
+
+            <div class="d-none d-lg-block" style="margin-right: -4%">
+              <ul class="navbar-nav mx-auto">
+                <li>
+                  <a
+                    class="nav-link"
+                    href="user-dashboard.html"
+                    style="padding-right: 13px"
+                    >MyThriftEx</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="wishlist.html"
+                    class="bi-heart custom-icon me-3"
+                    style="padding-left: 7%"
+                  ></a>
+                </li>
+                <li><a href="cart.html" class="bi-bag custom-icon"></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- <header
+        class="site-header section-padding d-flex justify-content-center align-items-center"
+      >
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-10 col-12">
+              <h1>
+                <span class="d-block text-primary">We provide you</span>
+                <span class="d-block text-dark">Fashionable Stuffs</span>
+              </h1>
+            </div>
+          </div>
+        </div>
+      </header> -->
+
+      <section class="product-detail section-padding">
+        <div class="container" id="product-container">
+          <div class="row product-detail-wrapper">
+            <div class="col-lg-4 col-12">
+              <div class="product-thumb">
+                <img
+                  src=""
+                  id="product-image"
+                  class="img-fluid product-image product-image-detail"
+                  alt="Product Image"
+                />
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+              <div class="product-info d-flex">
+                <div>
+                  <h2 class="product-title mb-0" id="product-title"></h2>
+                </div>
+                <p
+                  class="ms-auto product-condition-detail"
+                  id="product-condition"
+                ></p>
+              </div>
+
+              <small
+                class="product-price-detail text-muted"
+                id="product-price"
+              ></small>
+
+              <div class="product-description">
+                <strong class="d-block mt-4 mb-2 details">Description</strong>
+                <p
+                  class="lead mb-5 product-description-detail"
+                  id="product-description"
+                ></p>
+              </div>
+
+              <div class="product-additional-info">
+                <p>
+                  <strong class="details">Size:</strong>
+                  <span id="product-size"></span>
+                </p>
+                <p>
+                  <strong class="details">Gender:</strong>
+                  <span id="product-gender"></span>
+                </p>
+                <p>
+                  <strong class="details">Material:</strong>
+                  <span id="product-material"></span>
+                </p>
+              </div>
+
+              <div
+                class="product-cart-thumb row"
+                style="justify-content: center; margin-top: 10%; gap: 3%"
+              >
+                <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                  <button
+                    type="submit"
+                    class="btn custom-btn cart-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#cart-modal"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+                <button
+                  id="make-offer-btn"
+                  class="btn custom-btn cart-btn"
+                  style="width: 47%"
+                >
+                  Make Offer
+                </button>
+
+                <!-- Offer Modal -->
+
+                <div id="offer-modal" class="offer-modal" style="display: none">
+                  <div class="modal-content">
+                    <span id="close-modal" class="close-modal">&times;</span>
+
+                    <h2>Make an Offer</h2>
+
+                    <label for="offer-amount">Offer Amount:</label>
+
+                    <input
+                      type="number"
+                      id="offer-amount"
+                      class="offer-amount"
+                      min="1"
+                      required
+                    />
+
+                    <span
+                      id="offer-error"
+                      style="color: red; font-size: 14px"
+                    ></span>
+
+                    <label for="offer-message">Message (Optional):</label>
+
+                    <textarea
+                      id="offer-message"
+                      class="offer-message"
+                    ></textarea>
+
+                    <input type="hidden" id="product_id" />
+
+                    <button id="submit-offer" class="submit-offer" disabled>
+                      Continue
+                    </button>
+                  </div>
+                </div>
+
+                <p>
+                  <a href="#" class="product-additional-link">Details</a>
+
+                  <a href="#" id="toggle-link" class="product-additional-link"
+                    >Delivery and Payment</a
+                  >
+                </p>
+                <div class="hidden-text hidden">
+                  <p id="hidden-text">Check the FAQ page for more details</p>
+                </div>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="container">
+          <div class="row" style="margin-left: 35px; margin-right: -106px">
+            <div class="col-lg col-10 me-auto mb-4">
+              <h4 class="text-white"><a href="#">Thrift</a>Ex</h4>
+              <p class="copyright-text text-muted mb-4 mb-lg-0">
+                Copyright © 2025 <strong>ThriftEx</strong>
+              </p>
+              <br />
+              <p class="copyright-text">
+                <a href="#" target="_blank"></a>
+              </p>
+            </div>
+
+            <div class="col-lg col-5">
+              <h5 class="text-white mb-3">Quick Links</h5>
+
+              <ul
+                class="footer-menu d-flex flex-wrap"
+                style="flex-direction: column"
+              >
+                <li class="footer-menu-item">
+                  <a href="userHome.html" class="footer-menu-link">Home</a>
+                </li>
+
+                <li class="footer-menu-item">
+                  <a href="products.html" class="footer-menu-link"
+                    >All Products</a
+                  >
+                </li>
+
+                <li class="footer-menu-item">
+                  <a href="sell.html" class="footer-menu-link">Sell Products</a>
+                </li>
+
+                <li class="footer-menu-item">
+                  <a href="user-dashboard.html" class="footer-menu-link"
+                    >My ThriftEx</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-lg col-8">
+              <h5 class="text-white mb-3">Sitemap</h5>
+
+              <ul
+                class="footer-menu d-flex flex-wrap"
+                style="flex-direction: column"
+              >
+                <li class="footer-menu-item">
+                  <a href="about.html" class="footer-menu-link">About</a>
+                </li>
+
+                <li class="footer-menu-item">
+                  <a href="#" class="footer-menu-link">Privacy policy</a>
+                </li>
+
+                <li class="footer-menu-item">
+                  <a href="#" class="footer-menu-link">FAQs</a>
+                </li>
+
+                <li class="footer-menu-item">
+                  <a href="#" class="footer-menu-link">Contact</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-lg col-4">
+              <h5 class="text-white mb-3">Social</h5>
+
+              <ul
+                class="social-icon"
+                style="display: flex; flex-direction: column"
+              >
+                <li>
+                  <a href="#" class="social-icon-link bi-youtube"> Youtube</a>
+                </li>
+
+                <li>
+                  <a href="#" class="social-icon-link bi-whatsapp"> Whatsapp</a>
+                </li>
+
+                <li>
+                  <a href="#" class="social-icon-link bi-instagram">
+                    Instagram</a
+                  >
+                </li>
+
+                <li><a href="#" class="social-icon-link bi-twitter"> X</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <p
+          style="
+            font-family: 'Euphoria Script';
+            font-size: 35px;
+            font-weight: 300;
+            color: white;
+            padding-top: 5%;
+            text-align: center;
+            text-decoration: underline;
+            margin-top: 45px;
+          "
+        >
+          Keep Styling, Keep Thrifting
+        </p>
+      </footer>
+    </main>
+
+    <!-- JAVASCRIPT FILES -->
+    <script>
+      // Get the link and the hidden text
+      const toggleLink = document.getElementById("toggle-link");
+      const hiddenText = document.getElementById("hidden-text");
+
+      // Add click event listener to the link
+      toggleLink.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent the default link behavior
+        const hiddenTextContainer = document.querySelector(".hidden-text");
+        hiddenTextContainer.classList.toggle("hidden");
+      });
+    </script>
+    
+    <script>
+      document
+        .querySelector(".cart-btn")
+        .addEventListener("click", async () => {
+          const userId = 1; // Replace with dynamic user ID
+          const productId = new URLSearchParams(window.location.search).get(
+            "id"
+          );
+          const size = document
+            .querySelector("#product-size")
+            .textContent.trim();
+          const color = document
+            .querySelector("#product-color")
+            ?.textContent.trim(); // Optional, only if available
+          const price = parseFloat(
+            document
+              .querySelector("#product-price")
+              .textContent.replace("₹", "")
+              .trim()
+          );
+          const imageUrl = document.querySelector("#product-image").src;
+
+          if (!productId) {
+            alert("Product id not found");
+            return;
+          }
+
+          try {
+            const response = await fetch("http://localhost:3000/api/cart", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId,
+                productId,
+                size,
+                color,
+                price,
+                image_url: imageUrl,
+              }),
+            });
+            const data = await response.json();
+
+            if (data.success) {
+              alert(data.message || "Product added to cart .");
+            } else {
+              alert(data.message || "Failed to add product to cart.");
+            }
+          } catch (error) {
+            console.error("Error adding to cart:", error);
+            alert("An error occurred while adding to the cart.");
+          }
+        });
+    </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Headroom.js"></script>
+    <script src="js/jQuery.headroom.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/product-detail.js"></script>
+  </body>
+</html>
