@@ -40,7 +40,7 @@ cd thriftex
 ### 2. Install Dependencies
 npm install
 
-###3. Configure Your .env File
+### 3. Configure Your .env File
 Create a .env file in the root directory and add the following:
 
 ```
